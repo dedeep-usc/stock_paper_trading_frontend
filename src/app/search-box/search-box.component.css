@@ -1,0 +1,46 @@
+.ip_box {
+    /* font-size: 1vw; */
+    border: none;
+}
+
+.input_container {
+    background-color: #F8F9FA;
+    border-top-left-radius: 50rem;
+    border-bottom-left-radius: 50rem;
+    display: flex;
+}
+
+.invalid_ticker_error_div {
+    margin-top: 4vh;
+    text-align: center;
+    color: maroon;
+}
+
+.no_data_for_ticker {
+    margin-top: 4vh;
+    text-align: center;
+    color: maroon;
+}
+
+mat-form-field {
+    width: 100%;
+    padding: 0;
+  }
+
+::ng-deep .mat-form-field-underline {
+    display: none;
+}
+
+::ng-deep .mat-form-field-padding {
+    display: none;
+}
+
+.mat-form-field-infix {
+    padding: none;
+}
+
+.ip_search_box {
+    display: flex;
+}
+
+.mat-form-field-suffix { top: 0; }

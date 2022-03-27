@@ -1,0 +1,59 @@
+<div id="stock_results_loader_div" *ngIf="!error && !home_ticker && !all_data_loaded()">
+    <mat-spinner style="margin:0 auto;" [diameter]="70" class="row d-flex justify-content-center"></mat-spinner>
+</div>
+
+<div *ngIf="!error && !home_ticker && all_data_loaded()" class="row d-flex justify-content-center">
+    <div id="stock_main_detail" class="row d-flex justify-content-center">
+        <div id="stock_main_details1" class="col-lg-3 col-sm-3 col-5">
+            <div id="stock_main_details1_company_ticker">
+                {{company_ticker}}
+                <span class="fa fa-star checked star_symbol" *ngIf="present_in_watchlist()" (click)="remove_from_watchlist()"></span>
+                <span class="fa fa-star-o star_symbol" *ngIf="!present_in_watchlist()" (click)="add_to_watchlist()"></span>
+            </div>
+            <div id="stock_main_details1_company_name">
+                {{company_name}}
+            </div>
+            <div id="stock_main_details1_company_exchange">
+                {{company_exchange}}
+            </div>
+            <div id="stock_main_details1_company_buttons">
+                <button id="stock_main_buy_button" class="btn btn-success">Buy</button>
+                <button id="stock_main_sell_button" class="btn btn-danger" *ngIf="show_sell_button()">Sell</button>
+            </div>
+        </div>
+        <div id="stock_main_details2" class="col-lg-3 col-sm-3 col-2">
+            <img src="{{company_logo}}" style="height: 7vh; width: 7vh">
+        </div>
+        <div id="stock_main_details3" class="col-lg-3 col-sm-3 col-5">
+            <div id="stock_main_details3_price" [class]="price_change_class">
+                {{last_price}}
+            </div>
+            <div id="stock_main_details3_price_change" [class]="price_change_class">
+                <span class="fa fa-caret-up" *ngIf="price_up_symbol"></span> 
+                <span class="fa fa-caret-down" *ngIf="price_down_symbol"></span> 
+                {{price_change}} ({{price_change_percent}} %)
+            </div>
+            <div id="stock_main_details3_price_timestamp">
+                {{price_time}}
+            </div>
+        </div>
+        <div id="market_status_div" [class]="market_open_class">
+            <div id="market_open_div" *ngIf="market_open">
+                Market is Open
+            </div>
+            <div id="market_closed_div" *ngIf="!market_open">
+                Market Closed on {{market_close_time}}
+            </div>
+        </div>
+    </div>
+    <mat-tab-group mat-stretch-tabs animationDuration="0ms" mat-align-tabs="center" class="col-lg-9 col-sm-9 col-11 stock_tabs">
+        <mat-tab label="Summary">Summary</mat-tab>
+        <mat-tab label="Top News">Top News</mat-tab>
+        <mat-tab label="Charts">Charts</mat-tab>
+        <mat-tab label="Insight">Insight</mat-tab>
+    </mat-tab-group>
+</div>
+
+<div class="row d-flex justify-content-center no_data_for_ticker" *ngFor="let alert of alerts">
+    <ngb-alert class="col-lg-8 col-sm-8 col-10" [type]="alert.type" (closed)="close(alert)" [dismissible]="alert.dismissible">{{ alert.message }}</ngb-alert>
+</div>
