@@ -1,1 +1,0 @@
-# stock_paper_trading_frontend
