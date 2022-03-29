@@ -38,4 +38,22 @@ export class DateHelperService {
     return cur_time.getTime() - time*1000 < 300000;
 
   }
+
+  get_current_unix_epoch_time_in_seconds() {
+    var cur_time = new Date();
+    return cur_time.getTime() / 1000;
+  }
+
+  get_current_unix_epoch_time_in_seconds_from_time(time) {
+    return time.getTime() / 1000;
+  }
+
+  get_x_hours_behind(time, hours) {
+    return time - (60*60*hours);
+  }
+
+  subtract_years_from_date(date, years) {
+    date.setFullYear(date.getFullYear() - years);
+    return date.getTime() / 1000;
+  }
 }

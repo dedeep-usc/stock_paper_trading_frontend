@@ -52,4 +52,31 @@ export class CrudService {
     );
   }
 
+  get_company_peers(ticker): any {
+    var final_url = this.endpoint + "/api/finnhub/get/company/peers?company_name=" + ticker;
+    console.log("get_company_peers final_url: " + final_url);
+    return this.http_client.get(final_url).pipe(
+      catchError(this.handleError)
+    );
+  }
+
+  get_company_stock_candles_data(ticker, resolution, from, to): any {
+    var temp_url = `/api/finnhub/get/company/stock_candles?company_name=${ticker}&resolution=${resolution}&from=${from}&to=${to}`;
+    var final_url = this.endpoint + temp_url;
+    console.log("get_company_stock_candles_data final_url: " + final_url);
+
+    return this.http_client.get(final_url).pipe(
+      catchError(this.handleError)
+    );
+  }
+
+  get_company_social_sentiment(ticker): any {
+    var final_url = this.endpoint + "/api/finnhub/get/company/social/sentiment?company_name=" + ticker;
+    console.log("get_company_social_sentiment final_url: " + final_url);
+
+    return this.http_client.get(final_url).pipe(
+      catchError(this.handleError)
+    );
+  }
+
 }

@@ -42,3 +42,4 @@ testem.log
 Thumbs.db
 
 stock-paper-trading
+node_modules

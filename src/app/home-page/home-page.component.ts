@@ -29,7 +29,14 @@ export class HomePageComponent implements OnInit {
       // this.search_box.isLoading = false;
       this.search_box.filtered_tickers = [];
       this.fill_data(this.ticker_val);
-      // this.search_box.ticker_value.setValue(this.ticker_val);
+      if (this.ticker_val != "home") {
+        this.search_box.ticker_value.setValue({"symbol":this.ticker_val});
+        this.search_box.userClicked = true;
+      }
+      else {
+        this.search_box.ticker_value.setValue({"symbol": ""});
+        this.search_box.userClicked = true;
+      }
     });
   }
 
@@ -42,6 +49,7 @@ export class HomePageComponent implements OnInit {
       stock_results_tab.home_ticker = true;
       stock_results_tab.alerts = [];
       stock_results_tab.ticker = "home";
+      this.search_box.ticker_value.setValue({"symbol": ""});
       return;
     }
     

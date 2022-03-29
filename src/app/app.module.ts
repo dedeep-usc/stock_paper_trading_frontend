@@ -24,6 +24,15 @@ import { ReactiveFormsModule} from '@angular/forms';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { StockResultsComponent } from './stock-results/stock-results.component'
 import { MatTabsModule } from '@angular/material/tabs';
+import { PriceSummaryDetailsComponent } from './price-summary-details/price-summary-details.component';
+import { CompanyAboutComponent } from './components/summary/company-about/company-about.component';
+import { HourlyPriceChartComponent } from './components/summary/hourly-price-chart/hourly-price-chart.component';
+
+import { HighchartsChartModule } from 'highcharts-angular';
+import { MainChartComponent } from './components/charts/main-chart/main-chart.component';
+import { RecommendationTrendsComponent } from './components/insights/recommendation-trends/recommendation-trends.component';
+import { HistoricalEpsComponent } from './components/insights/historical-eps/historical-eps.component';
+import { SocialSentimentsComponent } from './components/insights/social-sentiments/social-sentiments.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +44,14 @@ import { MatTabsModule } from '@angular/material/tabs';
     WatchlistComponent,
     SearchBoxComponent,
     FooterComponent,
-    StockResultsComponent
+    StockResultsComponent,
+    PriceSummaryDetailsComponent,
+    CompanyAboutComponent,
+    HourlyPriceChartComponent,
+    MainChartComponent,
+    SocialSentimentsComponent,
+    RecommendationTrendsComponent,
+    HistoricalEpsComponent
   ],
   imports: [
     BrowserModule,
@@ -50,7 +66,8 @@ import { MatTabsModule } from '@angular/material/tabs';
     FormsModule,
     ReactiveFormsModule,
     MatProgressSpinnerModule,
-    MatTabsModule
+    MatTabsModule,
+    HighchartsChartModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,7 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { tick } from '@angular/core/testing';
 import { Router } from '@angular/router';
+import { CompanyAboutComponent } from '../components/summary/company-about/company-about.component';
+import { HourlyPriceChartComponent } from '../components/summary/hourly-price-chart/hourly-price-chart.component';
+import { PriceSummaryDetailsComponent } from '../price-summary-details/price-summary-details.component';
+import { CompanySocialSentimentService } from '../services/company-social-sentiment/company-social-sentiment.service';
 import { CompanyInfoService } from '../services/company_info/company-info.service';
+import { CompanyPeersService } from '../services/company_peers/company-peers.service';
 import { CompanyPriceService } from '../services/company_price/company-price.service';
+import { CompanyStockCandlesService } from '../services/company_stock_candles/company-stock-candles.service';
+import { MainChartStockCandlesService } from '../services/main-chart-stock-candles/main-chart-stock-candles.service';
 import { PurchasedStocksService } from '../services/purchased_stocks/purchased-stocks.service';
 import { WatchlistService } from '../services/watchlist/watchlist.service';
 import { CrudService } from '../shared/crud.service';
@@ -16,6 +24,10 @@ import { DateHelperService } from '../shared/date-helper.service';
 
 export class StockResultsComponent implements OnInit {
   
+  // @ViewChild(PriceSummaryDetailsComponent, {static : true}) price_summary_details_tab : PriceSummaryDetailsComponent;
+  // @ViewChild(CompanyAboutComponent, {static : true}) company_about_details_tab : CompanyAboutComponent;
+  // @ViewChild(HourlyPriceChartComponent, {static : true}) hourly_price_chart_tab : HourlyPriceChartComponent;
+
   ticker = "";
   home_ticker = false;
   error = false;
@@ -46,38 +58,113 @@ export class StockResultsComponent implements OnInit {
   price_down_symbol = false;
 
   alerts = []
+  
 
   no_data_for_ticker = {
     type: 'danger',
     message: 'No data found. Please enter a valid ticker',
-    dismissible: false
+    dismissible: false,
   };
+
+  watchlist_test_alert = {
+    type: 'success',
+    message: 'AAPL removed successfully removed from watchlist.',
+    dismissible: true,
+    show: false
+  };
+
+  self_closing_alerts = {
+    "a": this.watchlist_test_alert
+  }
 
   company_info_loaded = false;
   company_latest_price_loaded = false;
+  company_peers_loaded = false;
+  company_stock_candles_loaded = false;
+
+  get_watchlist_alert_body(ticker, buy) {
+    ticker = ticker.toUpperCase();
+  
+    return {
+      type: buy? "success" : "danger",
+      message: buy? `${ticker} added to Watchlist.` : `${ticker} removed from Watchlist.`,
+      dismissible: true,
+      show: true
+    }
+  }
+
+  get_buy_sell_alert_body(ticker, buy) {
+    ticker = ticker.toUpperCase();
+
+    return {
+      type: buy? "success" : "danger",
+      message: buy? `${ticker} bought successfully.` : `${ticker} sold successfully.`,
+      dismissible: true,
+      show: true
+    }
+  }
+
+  // add_to_self_closing_alerts(key, ticker, buy) {
+  //   this.self_closing_alerts[key] = this.get_watchlist_alert_body(ticker, buy);
+  //   setTimeout(() => this.self_closing_alerts_close(key), 2000);
+  // }
+
+  add_to_self_closing_alerts(key, data) {
+    this.self_closing_alerts[key] = data;
+    setTimeout(() => this.self_closing_alerts_close(key), 2000);
+  }
 
   remove_from_watchlist() {
+    var close_alert_key = `${this.ticker}_watchlist_remove`;
+    // this.add_to_self_closing_alerts(close_alert_key, this.ticker, false);
+    var alert_data = this.get_watchlist_alert_body(this.ticker, false);
+    this.add_to_self_closing_alerts(close_alert_key, alert_data);
     this.watchlist_service.remove_from_watchlist(this.ticker);
   }
 
   add_to_watchlist() {
+    var close_alert_key = `${this.ticker}_watchlist_add`;
+    // this.add_to_self_closing_alerts(close_alert_key, this.ticker, true);
+    var alert_data = this.get_watchlist_alert_body(this.ticker, true);
+    this.add_to_self_closing_alerts(close_alert_key, alert_data);
     this.watchlist_service.add_to_watchlist(this.ticker);
   }
 
-  all_data_loaded() {
-    return this.company_info_loaded && this.company_latest_price_loaded;
-    // return this.company_info_loaded;
+  buy_stock() {
+    var close_alert_key = `${this.ticker}_bought`;
+    var alert_data = this.get_buy_sell_alert_body(this.ticker, true);
+    this.add_to_self_closing_alerts(close_alert_key, alert_data);
+    this.purchased_stocks.buy_stock(this.ticker);
   }
 
-  clear_data_loaded_flags() {
-    this.company_info_loaded = false;
-    this.company_latest_price_loaded = false;
+  sell_stock() {
+    var close_alert_key = `${this.ticker}_sold`;
+    var alert_data = this.get_buy_sell_alert_body(this.ticker, false);
+    this.add_to_self_closing_alerts(close_alert_key, alert_data);
+    this.purchased_stocks.sell_stock(this.ticker);
   }
 
   show_sell_button() {
     return this.purchased_stocks.show_sell_button(this.ticker);
   }
 
+
+  all_data_loaded() {
+    // console.log("this.company_info_loaded: " + this.company_info_loaded);
+    // console.log("this.company_latest_price_loaded: " + this.company_latest_price_loaded);
+    // console.log("this.company_peers_loaded: " + this.company_peers_loaded);
+    return this.company_info_loaded && this.company_latest_price_loaded && this.company_peers_loaded && this.company_stock_candles_loaded;
+    // return this.company_info_loaded;
+    // return this.company_info_loaded && this.company_latest_price_loaded;
+  }
+
+  clear_data_loaded_flags() {
+    this.company_info_loaded = false;
+    this.company_latest_price_loaded = false;
+    this.company_peers_loaded = false;
+    this.company_stock_candles_loaded = false;
+  }
+  
   present_in_watchlist() {
     return this.watchlist_service.present_in_watchlist(this.ticker);
   }
@@ -86,26 +173,53 @@ export class StockResultsComponent implements OnInit {
     this.alerts.splice(this.alerts.indexOf(alert), 1);
   }
 
+  self_closing_alerts_close(alert) {
+    // this.watchlist_alerts.splice(this.watchlist_alerts.indexOf(alert), 1);
+    delete this.self_closing_alerts[alert];
+  }
+
   constructor(
     private crud: CrudService,
     private date_service: DateHelperService,
     private purchased_stocks: PurchasedStocksService,
     private watchlist_service: WatchlistService,
     public company_info_service: CompanyInfoService,
-    public company_price_service: CompanyPriceService
+    public company_price_service: CompanyPriceService,
+    public company_peers_service: CompanyPeersService,
+    public company_stock_candles_service: CompanyStockCandlesService,
+    public main_chart_stock_candles_service: MainChartStockCandlesService,
+    public company_social_sentiment_service: CompanySocialSentimentService
   ) { }
   
   company_info_details = null;
   company_latest_price_results = null;
   
   ngOnInit(): void {
+    // console.log("Ollaaa " + this.company_about_details_tab)
+
     this.company_info_service.company_info$.subscribe((data) => {
       this.company_info_subscribe_data(data);
     });
 
     this.company_price_service.company_price$.subscribe((data) => {
       this.company_latest_price_subscribe_data(data);
-    })
+    });
+
+    this.company_peers_service.company_peers$.subscribe((data) => {
+      this.company_peers_subscribe_data(data);
+    });
+
+    this.company_stock_candles_service.company_stock_candles$.subscribe((data) => {
+      this.company_stock_candles_subscribe_data(data);
+    });
+
+    this.main_chart_stock_candles_service.main_chart_stock_candles$.subscribe((data) => {
+      this.main_chart_stock_candles_subscribe_data(data);
+    });
+
+    this.company_social_sentiment_service.company_social_sentiment$.subscribe((data) => {
+      this.company_social_sentiment_subscribe_data(data);
+    });
   };
 
   ngOnDestroy(): void {
@@ -115,6 +229,10 @@ export class StockResultsComponent implements OnInit {
   reset_state_services() {
     this.company_info_service.reset_state();
     this.company_price_service.reset_state();
+    this.company_peers_service.reset_state();
+    this.company_stock_candles_service.reset_state();
+    this.main_chart_stock_candles_service.reset_state();
+    this.company_social_sentiment_service.reset_state();
   }
 
   remove_error() {
@@ -125,6 +243,7 @@ export class StockResultsComponent implements OnInit {
   handle_error() {
     this.error = true;
     this.alerts = [this.no_data_for_ticker];
+    this.reset_state_services();
   }
 
   remove_loaded_data() {
@@ -174,6 +293,9 @@ export class StockResultsComponent implements OnInit {
     this.company_name = data.name;
     this.company_exchange = data.exchange;
     this.company_logo = data.logo;
+    // this.company_about_details_tab.company_about_details["ipo_start_date"] = data.ipo;
+    // this.company_about_details_tab.company_about_details["industry"] = data.finnhubIndustry;
+    // this.company_about_details_tab.company_about_details["webpage"] = data.weburl;
   }
 
   reset_market_open_flags () {
@@ -214,7 +336,6 @@ export class StockResultsComponent implements OnInit {
     this.handle_price_change(data.d);
     this.handle_market_open_close(data.t);
   }
-  
 
   get_stock_data_new(ticker) {
     this.clear_data_loaded_flags();
@@ -246,6 +367,33 @@ export class StockResultsComponent implements OnInit {
 
     this.load_company_latest_price(data);
     this.company_latest_price_loaded = true;
+
+    this.call_stock_candles_api(data.t);
+  
+  }
+
+  call_stock_candles_api(unix_epoch_time) {
+    console.log("Calling stock candles api.")
+    var to = null;
+    var from = null;
+    var resolution = 5;
+    if (this.date_service.check_market_open(unix_epoch_time)) {
+      // call 6 hours from current time
+      console.log("Market open. Will call stock candles api with current time.");
+      to = Math.floor(this.date_service.get_current_unix_epoch_time_in_seconds());
+      from = Math.floor(this.date_service.get_x_hours_behind(to, 6));
+      resolution = 5;
+    }
+    else{
+      // call 6 hours from unix_epoch_time
+      console.log("Market closed. Will call stock candles api with unix_epoch_time");
+
+      to = unix_epoch_time;
+      from = Math.floor(this.date_service.get_x_hours_behind(to, 6));
+      resolution = 5;
+    }
+    console.log(`resolution: ${resolution}, from: ${from}, to: ${to}, ticker: ${this.ticker}`)
+    this.company_stock_candles_service.get_company_stock_candles(this.ticker, resolution, from, to);
   }
 
   company_info_subscribe_data(data) {
@@ -268,6 +416,101 @@ export class StockResultsComponent implements OnInit {
 
     this.load_company_info(data);
     this.company_info_loaded = true;
+
+    // start calling other apis
+    console.log("Company quote api successful. Will call other apis.")
+    // this.company_price_service.get_company_price(this.ticker);
+    this.company_peers_service.get_company_peers(this.ticker);
+    this.call_main_chart_stock_candles_api(this.ticker);
+    this.company_social_sentiment_service.get_company_social_sentiment(this.ticker);
+  }
+
+  call_main_chart_stock_candles_api(ticker) {
+    var to = null;
+    var from = null;
+    var cur_date = new Date();
+    var resolution = "D";
+
+    to = Math.floor(this.date_service.get_current_unix_epoch_time_in_seconds_from_time(cur_date));
+    from = Math.floor(this.date_service.subtract_years_from_date(cur_date, 2));
+
+    
+    console.log(`call_main_chart_stock_candles_api resolution: ${resolution}, from: ${from}, to: ${to}, ticker: ${this.ticker}`);
+    this.main_chart_stock_candles_service.get_company_stock_candles(ticker, resolution, from, to);
+
+  }
+  
+  company_stock_candles_subscribe_data(data) {
+    console.log("The result company_stock_candles_subscribe_data: " + JSON.stringify(data));
+
+    console.log("Current ticker: " + this.ticker);
+    console.log("The company from the result is: " + data.company_name);
+
+    if (data.company_name != this.ticker) {
+      console.log("Current company is different from the company from the data.");
+      return;
+    }
+
+    if ("error" in data) {
+      this.handle_error();
+      return;
+    }
+
+    this.company_stock_candles_loaded = true;
+  }
+
+  main_chart_stock_candles_subscribe_data(data) {
+    console.log("The result from main_chart_stock_candles_subscribe_data: " + JSON.stringify(data));
+
+    console.log("Current ticker: " + this.ticker);
+    console.log("The company from the result is: " + data.company_name);
+
+    if (data.company_name != this.ticker) {
+      console.log("Current company is different from the company from the data.");
+      return;
+    }
+
+    if ("error" in data) {
+      this.handle_error();
+      return;
+    }
+  }
+
+  company_social_sentiment_subscribe_data(data) {
+    console.log("The result from company_social_sentiment_subscribe_data: " + JSON.stringify(data));
+
+    console.log("Current ticker: " + this.ticker);
+    console.log("The company from the result is: " + data.company_name);
+
+    if (data.company_name != this.ticker) {
+      console.log("Current company is different from the company from the data.");
+      return;
+    }
+
+    if ("error" in data) {
+      this.handle_error();
+      return;
+    }
+  }
+
+  company_peers_subscribe_data(data) {
+    console.log("The result company_peers_subscribe_data: " + JSON.stringify(data));
+
+    console.log("Current ticker: " + this.ticker);
+    console.log("The company from the result is: " + data.company_name);
+
+    if (data.company_name != this.ticker) {
+      console.log("Current company is different from the company from the data.");
+      return;
+    }
+
+    if ("error" in data) {
+      this.handle_error();
+      return;
+    }
+
+    this.company_peers_loaded = true;
+
   }
 
   get_stock_data(ticker) {
