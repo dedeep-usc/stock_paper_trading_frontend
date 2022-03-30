@@ -16,7 +16,7 @@ VolumeByPrice(Highcharts);
 export class MainChartComponent implements OnInit {
 
   highcharts = Highcharts;
-
+  show_chart = false;
   chartOptions = null;
 
   main_chart_data = {
@@ -87,10 +87,13 @@ export class MainChartComponent implements OnInit {
       chart:{
           // marginLeft:40
       },
-      rangeSelector: {
-          enabled:true,
-          // selected: 2
-        },
+      // rangeSelector: {
+      //     enabled:true,
+      //     // selected: 2
+      //   },
+      // rangeSelector: {
+      //     selected: 5
+      // },
       title: {
           // text: data.charts.title
           // text: "VMW Historical"
@@ -184,6 +187,8 @@ export class MainChartComponent implements OnInit {
           }
       }]
     }
+
+    this.show_chart = true;
   }
 
 }

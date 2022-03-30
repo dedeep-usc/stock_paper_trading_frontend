@@ -82,7 +82,8 @@ export class CompanyPriceService {
       console.log(`CompanyPriceService Current ticker: ${this.ticker}`);
       console.log(`CompanyPriceService Company from the API result is: ${data.company_name}`);
       if (data.company_name != this.ticker) {
-        console.log("CompanyPriceService Current company is different from the company from the data.")
+        console.log("CompanyPriceService Current company is different from the company from the data.");
+        return;
       }
 
       if ("error" in data) {

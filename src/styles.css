@@ -4,12 +4,20 @@ body {
     margin: 0; 
     font-family: Roboto, "Helvetica Neue", sans-serif; 
 
+    background-image: linear-gradient(rgba(255,255,255,0.6), rgba(255,255,255,0.6)),url('assets/background-graph.jpg');
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    background-attachment: fixed;
     /* background:url("assets/background-graph.jpg");
     background-repeat: no-repeat;
     background-size: 100% 100%; */
 }
 
-body::after {
+/* html {
+    overflow-y: scroll !important;
+    } */
+
+/* body::after {
     content: "";
     background:url("assets/background-graph.jpg");
     opacity: 0.3;
@@ -21,4 +29,5 @@ body::after {
     z-index: -1;   
     background-repeat: no-repeat;
     background-size: 100% 100%;
-  }
+    background-attachment: fixed;
+  } */

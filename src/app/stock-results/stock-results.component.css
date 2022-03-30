@@ -107,3 +107,7 @@ span.star_symbol {
 /* .scrollbar-hidden::-webkit-scrollbar {
     display: none;
   } */
+
+.modal {
+    padding-right: 0px !important;
+}

@@ -52,7 +52,7 @@
     </div>
     <mat-tab-group mat-stretch-tabs animationDuration="0ms" mat-align-tabs="center" class="col-lg-9 col-sm-9 col-11 stock_tabs">
         <mat-tab label="Summary" class="company_info_tabs">
-            <div class="row container d-flex justify-content-center">
+            <!-- <div class="row container d-flex justify-content-center">
                 <div class="col-lg-5 col-sm-5 col-10" id="company_price_summary_div">
                     <app-price-summary-details class="col-12"></app-price-summary-details>
                     <app-company-about class="col-12"></app-company-about>
@@ -60,29 +60,54 @@
                 <div class="col-lg-5 col-sm-5 col-10" id="company_price_var_chart">
                     <app-hourly-price-chart></app-hourly-price-chart>
                 </div>
-            </div>
-        </mat-tab>
-        <mat-tab label="Top News">Top News</mat-tab>
-        <mat-tab label="Charts">
-            <div class="row container d-flex justify-content-center">
-                <div class="col-12">
-                    <app-main-chart></app-main-chart>
+            </div> -->
+            <div class="container-fluid text-center">
+                <div class="row d-flex justify-content-center">
+                    <div class="col-lg-5 col-sm-5 col-10" id="company_price_summary_div">
+                        <app-price-summary-details class="col-12"></app-price-summary-details>
+                        <app-company-about class="col-12"></app-company-about>
+                    </div>
+                    <div class="col-lg-5 col-sm-5 col-10" id="company_price_var_chart">
+                        <app-hourly-price-chart></app-hourly-price-chart>
+                    </div>
                 </div>
             </div>
+        </mat-tab>
+        <mat-tab label="Top News">
+            <app-news></app-news>
+        </mat-tab>
+        <mat-tab label="Charts">
+            <div class="row container d-flex justify-content-center m-0 p-0">
+                <div class="row container m-0 p-0">
+                    <div class="col-12 m-0 p-0">
+                        <app-main-chart></app-main-chart>
+                    </div>
+                </div>
+            </div>
+            <!-- <div class="container-fluid text-center">
+                <div class="row justify-content-center">
+                    <div class="col-12">
+                        <app-main-chart></app-main-chart>
+                    </div>
+                </div>
+            </div> -->
         </mat-tab>
         <mat-tab label="Insight">
-            <div class="row container d-flex justify-content-center">
-                <div class="col-lg-10 col-sm-10 col-10">
-                    <app-social-sentiments></app-social-sentiments>
+            <div class="container-fluid text-center">
+                <div class="row d-flex justify-content-center">
+                    <div class="col-lg-10 col-sm-10 col-10">
+                        <app-social-sentiments></app-social-sentiments>
+                    </div>
                 </div>
-            </div>
-            <div class="row container d-flex justify-content-center">
-                <div class="col-lg-5 col-sm-5 col-10">
-                    <app-recommendation-trends></app-recommendation-trends>
+                <div class="row d-flex justify-content-center">
+                    <div class="col-lg-5 col-sm-5 col-10">
+                        <app-recommendation-trends></app-recommendation-trends>
+                    </div>
+                    <div class="col-lg-5 col-sm-5 col-10">
+                        <app-historical-eps></app-historical-eps>
+                    </div>
                 </div>
-                <div class="col-lg-5 col-sm-5 col-10">
-                    <app-historical-eps></app-historical-eps>
-                </div>
+
             </div>
         </mat-tab>
     </mat-tab-group>

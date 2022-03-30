@@ -4,6 +4,9 @@ import { Router } from '@angular/router';
 import { CompanyAboutComponent } from '../components/summary/company-about/company-about.component';
 import { HourlyPriceChartComponent } from '../components/summary/hourly-price-chart/hourly-price-chart.component';
 import { PriceSummaryDetailsComponent } from '../price-summary-details/price-summary-details.component';
+import { CompanyEarningsService } from '../services/company-earnings/company-earnings.service';
+import { CompanyLatestNewsService } from '../services/company-latest-news/company-latest-news.service';
+import { CompanyRecommendationTrendsService } from '../services/company-recommendation-trends/company-recommendation-trends.service';
 import { CompanySocialSentimentService } from '../services/company-social-sentiment/company-social-sentiment.service';
 import { CompanyInfoService } from '../services/company_info/company-info.service';
 import { CompanyPeersService } from '../services/company_peers/company-peers.service';
@@ -188,7 +191,10 @@ export class StockResultsComponent implements OnInit {
     public company_peers_service: CompanyPeersService,
     public company_stock_candles_service: CompanyStockCandlesService,
     public main_chart_stock_candles_service: MainChartStockCandlesService,
-    public company_social_sentiment_service: CompanySocialSentimentService
+    public company_social_sentiment_service: CompanySocialSentimentService,
+    public company_recommendation_trends_service: CompanyRecommendationTrendsService,
+    public company_earnings_service: CompanyEarningsService,
+    public company_latest_news_service: CompanyLatestNewsService
   ) { }
   
   company_info_details = null;
@@ -220,6 +226,19 @@ export class StockResultsComponent implements OnInit {
     this.company_social_sentiment_service.company_social_sentiment$.subscribe((data) => {
       this.company_social_sentiment_subscribe_data(data);
     });
+
+    this.company_recommendation_trends_service.company_recommendation_trends$.subscribe((data) => {
+      this.company_recommendation_trends_subscribe_data(data);
+    });
+
+    this.company_earnings_service.company_earnings$.subscribe((data) => {
+      this.company_earnings_subscribe_data(data);
+    });
+
+    this.company_latest_news_service.company_latest_news$.subscribe((data) => {
+      this.company_latest_news_subscribe_data(data);
+    });
+
   };
 
   ngOnDestroy(): void {
@@ -233,6 +252,9 @@ export class StockResultsComponent implements OnInit {
     this.company_stock_candles_service.reset_state();
     this.main_chart_stock_candles_service.reset_state();
     this.company_social_sentiment_service.reset_state();
+    this.company_recommendation_trends_service.reset_state();
+    this.company_earnings_service.reset_state();
+    this.company_latest_news_service.reset_state();
   }
 
   remove_error() {
@@ -423,6 +445,22 @@ export class StockResultsComponent implements OnInit {
     this.company_peers_service.get_company_peers(this.ticker);
     this.call_main_chart_stock_candles_api(this.ticker);
     this.company_social_sentiment_service.get_company_social_sentiment(this.ticker);
+    this.company_recommendation_trends_service.get_company_recommendation_trends(this.ticker);
+    this.company_earnings_service.get_company_earnings(this.ticker);
+    this.call_latest_news_api(this.ticker);
+  }
+
+  call_latest_news_api(ticker) {
+    var to = null;
+    var from  = null;
+    var cur_date = new Date();
+
+    to = this.date_service.get_news_date_format(cur_date);
+    cur_date = this.date_service.subtract_days_from_date(cur_date, 7);
+    from = this.date_service.get_news_date_format(cur_date);
+
+    console.log(`call_latest_news_api to: ${to}, cur_date: ${cur_date}, from: ${from}.`)
+    this.company_latest_news_service.get_company_latest_news(ticker, from, to);
   }
 
   call_main_chart_stock_candles_api(ticker) {
@@ -478,6 +516,59 @@ export class StockResultsComponent implements OnInit {
 
   company_social_sentiment_subscribe_data(data) {
     console.log("The result from company_social_sentiment_subscribe_data: " + JSON.stringify(data));
+
+    console.log("Current ticker: " + this.ticker);
+    console.log("The company from the result is: " + data.company_name);
+
+    if (data.company_name != this.ticker) {
+      console.log("Current company is different from the company from the data.");
+      return;
+    }
+
+    if ("error" in data) {
+      this.handle_error();
+      return;
+    }
+  }
+
+  company_recommendation_trends_subscribe_data(data) {
+    console.log("The result from company_recommendation_trends_subscribe_data: " + JSON.stringify(data));
+
+    console.log("Current ticker: " + this.ticker);
+    console.log("The company from the result is: " + data.company_name);
+
+    if (data.company_name != this.ticker) {
+      console.log("Current company is different from the company from the data.");
+      return;
+    }
+
+    if ("error" in data) {
+      this.handle_error();
+      return;
+    }
+
+
+  }
+
+  company_earnings_subscribe_data(data) {
+    console.log("The result from company_earnings_subscribe_data: " + JSON.stringify(data));
+
+    console.log("Current ticker: " + this.ticker);
+    console.log("The company from the result is: " + data.company_name);
+
+    if (data.company_name != this.ticker) {
+      console.log("Current company is different from the company from the data.");
+      return;
+    }
+
+    if ("error" in data) {
+      this.handle_error();
+      return;
+    }
+  }
+
+  company_latest_news_subscribe_data(data){
+    console.log("The result from company_latest_news_subscribe_data: " + JSON.stringify(data));
 
     console.log("Current ticker: " + this.ticker);
     console.log("The company from the result is: " + data.company_name);

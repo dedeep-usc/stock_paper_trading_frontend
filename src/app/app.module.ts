@@ -4,7 +4,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbActiveModal, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { HomePageComponent } from './home-page/home-page.component';
@@ -33,6 +33,9 @@ import { MainChartComponent } from './components/charts/main-chart/main-chart.co
 import { RecommendationTrendsComponent } from './components/insights/recommendation-trends/recommendation-trends.component';
 import { HistoricalEpsComponent } from './components/insights/historical-eps/historical-eps.component';
 import { SocialSentimentsComponent } from './components/insights/social-sentiments/social-sentiments.component';
+import { NewsComponent } from './components/news/news.component';
+import { NewsDetailComponent } from './components/news-detail/news-detail.component';
+
 
 @NgModule({
   declarations: [
@@ -51,7 +54,9 @@ import { SocialSentimentsComponent } from './components/insights/social-sentimen
     MainChartComponent,
     SocialSentimentsComponent,
     RecommendationTrendsComponent,
-    HistoricalEpsComponent
+    HistoricalEpsComponent,
+    NewsComponent,
+    NewsDetailComponent
   ],
   imports: [
     BrowserModule,
@@ -67,7 +72,7 @@ import { SocialSentimentsComponent } from './components/insights/social-sentimen
     ReactiveFormsModule,
     MatProgressSpinnerModule,
     MatTabsModule,
-    HighchartsChartModule
+    HighchartsChartModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -79,4 +79,31 @@ export class CrudService {
     );
   }
 
+  get_company_recommendation_trends(ticker): any {
+    var final_url = this.endpoint + "/api/finnhub/get/company/recommendation/trend?company_name=" + ticker;
+    console.log("get_company_recommendation_trends:  " + final_url);
+
+    return this.http_client.get(final_url).pipe(
+      catchError(this.handleError)
+    );
+  }
+
+  get_company_earnings(ticker): any {
+    var final_url = this.endpoint + "/api/finnhub/get/company/earnings?company_name=" + ticker;
+    console.log("get_company_earnings:  " + final_url);
+
+    return this.http_client.get(final_url).pipe(
+      catchError(this.handleError)
+    );
+  }
+
+  get_company_latest_news(ticker, from, to): any {
+    var final_url = this.endpoint + `/api/finnhub/get/company/news?from=${from}&to=${to}&company_name=${ticker}`;
+    console.log("get_company_latest_news: " + final_url);
+
+    return this.http_client.get(final_url).pipe(
+      catchError(this.handleError)
+    );
+  }
+
 }

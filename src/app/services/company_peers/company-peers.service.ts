@@ -79,7 +79,8 @@ export class CompanyPeersService {
       console.log(`Current ticker: ${this.ticker}`);
       console.log(`Company from the API result is: ${data.company_name}`);
       if (data.company_name != this.ticker) {
-        console.log("Current company is different from the company from the data.")
+        console.log("Current company is different from the company from the data.");
+        return;
       }
 
       if ("error" in data) {

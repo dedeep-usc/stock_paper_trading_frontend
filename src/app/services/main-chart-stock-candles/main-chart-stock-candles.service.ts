@@ -90,7 +90,8 @@ export class MainChartStockCandlesService {
       console.log(`MainChartStockCandlesService Current ticker: ${this.ticker}`);
       console.log(`MainChartStockCandlesService Company from the API result is: ${data.company_name}`);
       if (data.company_name != this.ticker) {
-        console.log("MainChartStockCandlesService Current company is different from the company from the data.")
+        console.log("MainChartStockCandlesService Current company is different from the company from the data.");
+        return;
       }
 
       if ("error" in data) {

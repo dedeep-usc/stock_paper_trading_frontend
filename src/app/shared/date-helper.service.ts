@@ -29,6 +29,16 @@ export class DateHelperService {
     return (yyyy + "-" + MM + "-" + dd + " " + hours + ":" + minutes + ":" + seconds);
   }
 
+  get_news_date_format(date) {
+    var dd = (date.getDate() < 10 ? '0' : '') + date.getDate();
+    // 01, 02, 03, ... 10, 11, 12
+    var MM = ((date.getMonth() + 1) < 10 ? '0' : '') + (date.getMonth() + 1);
+    // 1970, 1971, ... 2015, 2016, ...
+    var yyyy = date.getFullYear();
+
+    return (yyyy + "-" + MM + "-" + dd);
+  }
+
   check_market_open(time) {
     // var request_time = new Date(time * 1000);
     var cur_time = new Date();
@@ -55,5 +65,10 @@ export class DateHelperService {
   subtract_years_from_date(date, years) {
     date.setFullYear(date.getFullYear() - years);
     return date.getTime() / 1000;
+  }
+
+  subtract_days_from_date(date, days) {
+    date.setDate(date.getDate() - days)
+    return date;
   }
 }
