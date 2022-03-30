@@ -1,0 +1,28 @@
+#recomm_chart_div {
+    margin-top: 4vh;
+}
+
+/* @media screen and (min-width: 540px) {
+    .recomm_chart_style {
+        width: 40vw;
+        height: 40vh
+    }
+} */
+
+.chart-container {
+    width: fit-content;
+    margin: 0px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* #recom_chart_control {
+    margin-top: 4vh;
+    width: 28vw;
+    height: 40vh;
+
+    @media screen and (max-width: 500px){
+        width: 100vw;
+    }
+} */

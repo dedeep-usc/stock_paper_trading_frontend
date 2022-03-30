@@ -2,6 +2,10 @@
     <mat-spinner style="margin:0 auto;" [diameter]="70" class="row d-flex justify-content-center"></mat-spinner>
 </div>
 
+<div class="row d-flex justify-content-center watchlist_alerts" *ngFor="let alert of self_closing_alerts | keyvalue">
+    <ngb-alert *ngIf="alert.value.show" class="col-lg-8 col-sm-8 col-10" [type]="alert.value.type" (closed)="self_closing_alerts_close(alert.key)" [dismissible]="alert.value.dismissible">{{ alert.value.message }}</ngb-alert>
+</div>
+
 <div *ngIf="!error && !home_ticker && all_data_loaded()" class="row d-flex justify-content-center">
     <div id="stock_main_detail" class="row d-flex justify-content-center">
         <div id="stock_main_details1" class="col-lg-3 col-sm-3 col-5">
@@ -17,8 +21,8 @@
                 {{company_exchange}}
             </div>
             <div id="stock_main_details1_company_buttons">
-                <button id="stock_main_buy_button" class="btn btn-success">Buy</button>
-                <button id="stock_main_sell_button" class="btn btn-danger" *ngIf="show_sell_button()">Sell</button>
+                <button id="stock_main_buy_button" class="btn btn-success" (click)="buy_stock()">Buy</button>
+                <button id="stock_main_sell_button" class="btn btn-danger" (click)="sell_stock()" *ngIf="show_sell_button()">Sell</button>
             </div>
         </div>
         <div id="stock_main_details2" class="col-lg-3 col-sm-3 col-2">
@@ -47,10 +51,65 @@
         </div>
     </div>
     <mat-tab-group mat-stretch-tabs animationDuration="0ms" mat-align-tabs="center" class="col-lg-9 col-sm-9 col-11 stock_tabs">
-        <mat-tab label="Summary">Summary</mat-tab>
-        <mat-tab label="Top News">Top News</mat-tab>
-        <mat-tab label="Charts">Charts</mat-tab>
-        <mat-tab label="Insight">Insight</mat-tab>
+        <mat-tab label="Summary" class="company_info_tabs">
+            <!-- <div class="row container d-flex justify-content-center">
+                <div class="col-lg-5 col-sm-5 col-10" id="company_price_summary_div">
+                    <app-price-summary-details class="col-12"></app-price-summary-details>
+                    <app-company-about class="col-12"></app-company-about>
+                </div>
+                <div class="col-lg-5 col-sm-5 col-10" id="company_price_var_chart">
+                    <app-hourly-price-chart></app-hourly-price-chart>
+                </div>
+            </div> -->
+            <div class="container-fluid text-center">
+                <div class="row d-flex justify-content-center">
+                    <div class="col-lg-5 col-sm-5 col-10" id="company_price_summary_div">
+                        <app-price-summary-details class="col-12"></app-price-summary-details>
+                        <app-company-about class="col-12"></app-company-about>
+                    </div>
+                    <div class="col-lg-5 col-sm-5 col-10" id="company_price_var_chart">
+                        <app-hourly-price-chart></app-hourly-price-chart>
+                    </div>
+                </div>
+            </div>
+        </mat-tab>
+        <mat-tab label="Top News">
+            <app-news></app-news>
+        </mat-tab>
+        <mat-tab label="Charts">
+            <div class="row container d-flex justify-content-center m-0 p-0">
+                <div class="row container m-0 p-0">
+                    <div class="col-12 m-0 p-0">
+                        <app-main-chart></app-main-chart>
+                    </div>
+                </div>
+            </div>
+            <!-- <div class="container-fluid text-center">
+                <div class="row justify-content-center">
+                    <div class="col-12">
+                        <app-main-chart></app-main-chart>
+                    </div>
+                </div>
+            </div> -->
+        </mat-tab>
+        <mat-tab label="Insight">
+            <div class="container-fluid text-center">
+                <div class="row d-flex justify-content-center">
+                    <div class="col-lg-10 col-sm-10 col-10">
+                        <app-social-sentiments></app-social-sentiments>
+                    </div>
+                </div>
+                <div class="row d-flex justify-content-center">
+                    <div class="col-lg-5 col-sm-5 col-10">
+                        <app-recommendation-trends></app-recommendation-trends>
+                    </div>
+                    <div class="col-lg-5 col-sm-5 col-10">
+                        <app-historical-eps></app-historical-eps>
+                    </div>
+                </div>
+
+            </div>
+        </mat-tab>
     </mat-tab-group>
 </div>
 

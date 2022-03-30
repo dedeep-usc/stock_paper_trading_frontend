@@ -1,7 +1,11 @@
 .stock_search_div {
-    margin-top: 5vh;
+    margin-top: 10vh;
     text-align: center;
     font-size: 3vh;
     font-weight: bold;
     margin-bottom: 3vh;
+}
+
+.home_page_end_div {
+    margin-bottom: 10vh;
 }

@@ -1,0 +1,17 @@
+<div id="about_company_div">
+    <div class="about_company_heading">About the Company</div>
+    <div class="about_company_details_div about_company_details_div_first">
+        <span><b>IPO Start Date:</b> {{company_about_details.ipo_start_date}}</span>
+    </div>
+    <div class="about_company_details_div">
+        <span><b>Industry:</b> {{company_about_details.industry}}</span>
+    </div>
+    <div class="about_company_details_div">
+        <span><b>Webpage:</b> <a [href]="company_about_details.webpage" target="_blank"> {{company_about_details.webpage}}</a></span>
+    </div>
+    <div class="about_company_details_div">
+        <span><b>Company peers:</b> </span>
+        <span *ngFor="let peer of company_about_details.company_peers"><a class="peer_a" routerLink="/search/{{peer}}"> {{peer}},</a></span>
+    </div>
+
+</div>

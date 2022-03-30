@@ -1,0 +1,11 @@
+.price_summary {
+    margin-top: 4vh;
+}
+.key_element {
+    text-align: right;
+    font-weight: bold;
+}
+
+.value_element {
+    text-align: left;
+}

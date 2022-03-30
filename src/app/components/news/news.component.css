@@ -1,0 +1,21 @@
+.main_news_content_div {
+    margin-top: 4vh;
+}
+
+.news-card {
+    border-radius: 0.3rem;
+    border: 0.5px solid #adb5bd;
+}
+
+.news-img {
+    border-radius: 0.7rem;
+}
+
+.modal-open {
+    overflow: scroll;
+    padding-right: 0px !important;
+  }
+
+.news-card {
+    cursor: pointer;
+}

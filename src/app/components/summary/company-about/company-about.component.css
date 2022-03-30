@@ -1,0 +1,25 @@
+.about_company_heading {
+    text-align: center;
+    font-weight: bold;
+    text-decoration: underline;
+    margin-top: 4vh;
+    font-size: 2.5vh;
+}
+
+.about_company_details_div {
+    margin-top: 1vh;
+    text-align: left;
+}
+
+.peer_a {
+    text-decoration: none;
+}
+
+#about_company_div {
+    margin-bottom: 4vh;
+}
+
+.about_company_details_div_first {
+    margin-top: 4vh;
+    text-align: left;
+}

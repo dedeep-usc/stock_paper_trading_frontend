@@ -1,0 +1,15 @@
+#eps_chart_div {
+    margin-top: 4vh;
+}
+
+.chart-container {
+    width: fit-content;
+    margin: 0px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* #chart_control {
+    margin-top: 4vh;
+} */

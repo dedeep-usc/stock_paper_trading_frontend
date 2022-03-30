@@ -4,7 +4,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbActiveModal, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { HomePageComponent } from './home-page/home-page.component';
@@ -24,6 +24,18 @@ import { ReactiveFormsModule} from '@angular/forms';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { StockResultsComponent } from './stock-results/stock-results.component'
 import { MatTabsModule } from '@angular/material/tabs';
+import { PriceSummaryDetailsComponent } from './price-summary-details/price-summary-details.component';
+import { CompanyAboutComponent } from './components/summary/company-about/company-about.component';
+import { HourlyPriceChartComponent } from './components/summary/hourly-price-chart/hourly-price-chart.component';
+
+import { HighchartsChartModule } from 'highcharts-angular';
+import { MainChartComponent } from './components/charts/main-chart/main-chart.component';
+import { RecommendationTrendsComponent } from './components/insights/recommendation-trends/recommendation-trends.component';
+import { HistoricalEpsComponent } from './components/insights/historical-eps/historical-eps.component';
+import { SocialSentimentsComponent } from './components/insights/social-sentiments/social-sentiments.component';
+import { NewsComponent } from './components/news/news.component';
+import { NewsDetailComponent } from './components/news-detail/news-detail.component';
+
 
 @NgModule({
   declarations: [
@@ -35,7 +47,16 @@ import { MatTabsModule } from '@angular/material/tabs';
     WatchlistComponent,
     SearchBoxComponent,
     FooterComponent,
-    StockResultsComponent
+    StockResultsComponent,
+    PriceSummaryDetailsComponent,
+    CompanyAboutComponent,
+    HourlyPriceChartComponent,
+    MainChartComponent,
+    SocialSentimentsComponent,
+    RecommendationTrendsComponent,
+    HistoricalEpsComponent,
+    NewsComponent,
+    NewsDetailComponent
   ],
   imports: [
     BrowserModule,
@@ -50,7 +71,8 @@ import { MatTabsModule } from '@angular/material/tabs';
     FormsModule,
     ReactiveFormsModule,
     MatProgressSpinnerModule,
-    MatTabsModule
+    MatTabsModule,
+    HighchartsChartModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

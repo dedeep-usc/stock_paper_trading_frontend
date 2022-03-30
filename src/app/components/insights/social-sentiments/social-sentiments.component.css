@@ -1,0 +1,21 @@
+.social_sentiments_heading {
+    font-weight: bold;
+    margin-top: 4vh;
+    font-size: 2.5vh;
+}
+
+.social_sentiments_table {
+    margin-top: 2vh;
+}
+
+.row_headings {
+    /* @media screen  and (max-width: 600px){
+        font-size: 0.1vw;
+    }; */
+    font-size: 1.75vh;
+    background-color: #E8ECEF;
+}
+
+.table_content {
+    font-size: 1.75vh;
+}

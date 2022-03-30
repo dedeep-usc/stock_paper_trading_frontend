@@ -1,0 +1,12 @@
+.modal-open {
+    overflow: scroll;
+    padding-right: 0px !important;
+  }
+
+.close_button_news {
+    background-color: white;
+}
+
+a{
+    cursor: pointer;
+}

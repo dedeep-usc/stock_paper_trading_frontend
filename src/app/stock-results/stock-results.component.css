@@ -92,3 +92,22 @@ span.star_symbol {
     margin-top: 2vh;
 }
 
+.watchlist_alerts {
+    margin-top: 4vh;
+    text-align: center;
+}
+
+
+/* .mat-tab-body-content { overflow: hidden!important}
+
+.company_info_tabs {
+    overflow: hidden!important
+} */
+
+/* .scrollbar-hidden::-webkit-scrollbar {
+    display: none;
+  } */
+
+.modal {
+    padding-right: 0px !important;
+}
