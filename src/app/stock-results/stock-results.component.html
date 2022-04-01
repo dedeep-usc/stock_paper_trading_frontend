@@ -38,7 +38,7 @@
             <div id="stock_main_details3_price_change" [class]="price_change_class">
                 <span class="fa fa-caret-up" *ngIf="price_up_symbol"></span> 
                 <span class="fa fa-caret-down" *ngIf="price_down_symbol"></span> 
-                {{price_change}} ({{price_change_percent}} %)
+                <span class="text-nowrap">{{price_change}} ({{price_change_percent}} %)</span>
             </div>
             <div id="stock_main_details3_price_timestamp">
                 {{price_time}}
