@@ -21,14 +21,16 @@ export class CompanyPriceService {
     "l": 0,
     "o": 0,
     "pc": 0,
-    "t": 0 
+    "t": 0,
+    "autocomplete": false
   }
 
   error_data = {
     "error": true,
     "reason": "",
     "company_name": "",
-    "data": true
+    "data": true,
+    "autocomplete": false
   }
 
   private _company_price_result = new BehaviorSubject(this.data);
@@ -52,7 +54,8 @@ export class CompanyPriceService {
       "l": 0,
       "o": 0,
       "pc": 0,
-      "t": 0 
+      "t": 0,
+      "autocomplete": false
     });
   }
 
@@ -66,9 +69,9 @@ export class CompanyPriceService {
     this.set_values(this.error_data);
   }
 
-  get_company_price(ticker) {
+  get_company_price(ticker, autorefresh=false) {
     console.log("CompanyPriceService get_company_price ticker: " + ticker);
-    if (this.check_valid_data_present(ticker)) {
+    if (!autorefresh && this.check_valid_data_present(ticker)) {
       console.log(`CompanyPriceService already has data for the ticker: ${ticker}. Will return.`);
       return;
     }
@@ -96,13 +99,13 @@ export class CompanyPriceService {
       // console.log("Current ticker: " + this.ticker);
       // console.log("The company from the result is: " + data.company_name);
 
-      this.update_values_from_data(data);
+      this.update_values_from_data(data, autorefresh);
 
     })
 
   }
 
-  update_values_from_data(data) {
+  update_values_from_data(data, autorefresh) {
     var company_name = data.company_name;
     data = data.message;
     var temp_data = {
@@ -115,7 +118,8 @@ export class CompanyPriceService {
       "l": data.l,
       "o": data.o,
       "pc": data.pc,
-      "t": data.t
+      "t": data.t,
+      "autorefresh": autorefresh
     }
 
     this.set_values(temp_data);

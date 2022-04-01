@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { tick } from '@angular/core/testing';
 import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { Subscription } from 'rxjs';
+import { interval, Subscription } from 'rxjs';
 import { CompanyAboutComponent } from '../components/summary/company-about/company-about.component';
 import { HourlyPriceChartComponent } from '../components/summary/hourly-price-chart/hourly-price-chart.component';
 import { TransactionButtonComponent } from '../components/transaction-button/transaction-button/transaction-button.component';
@@ -278,6 +278,8 @@ export class StockResultsComponent implements OnInit {
   company_recommendation_trends_service_subscription : Subscription
   company_earnings_service_subscription : Subscription
   company_latest_news_service_subscription : Subscription
+  
+  auto_refresh_subscription : Subscription = null;
 
   ngOnInit(): void {
     // console.log("Ollaaa " + this.company_about_details_tab)
@@ -332,6 +334,9 @@ export class StockResultsComponent implements OnInit {
     this.company_recommendation_trends_service_subscription.unsubscribe();
     this.company_earnings_service_subscription.unsubscribe();
     this.company_latest_news_service_subscription.unsubscribe();
+    
+    // autorefresh
+    this.clear_auto_refresh_subscription();
   }
 
   reset_state_services() {
@@ -355,6 +360,7 @@ export class StockResultsComponent implements OnInit {
     this.error = true;
     this.alerts = [this.no_data_for_ticker];
     this.reset_state_services();
+    this.clear_auto_refresh_subscription();
   }
 
   remove_loaded_data() {
@@ -446,12 +452,42 @@ export class StockResultsComponent implements OnInit {
     this.price_time = this.date_service.get_homepage_format(new Date());
     this.handle_price_change(data.d);
     this.handle_market_open_close(data.t);
+
+    if (this.date_service.check_market_open(data.t)){
+      console.log("Market open. Setting up auto refresh.")
+      this.add_auto_refresh();
+    }
+    
+  }
+
+  add_auto_refresh() {
+    if (this.auto_refresh_subscription == null) {
+      console.log("Adding auto refresh")
+      const source = interval(15000);
+      this.auto_refresh_subscription = source.subscribe((val) => 
+      { 
+        if (this.ticker == "HOME" || this.ticker == "home"){
+          return;
+        }
+        console.log("Autofresh happening.")
+        this.company_price_service.get_company_price(this.ticker, true);
+      })
+    }
+  }
+
+  clear_auto_refresh_subscription() {
+    if (this.auto_refresh_subscription != null) {
+      console.log("Stop auto refresh!")
+      this.auto_refresh_subscription.unsubscribe();
+      this.auto_refresh_subscription = null;
+    }
   }
 
   get_stock_data_new(ticker) {
     this.clear_data_loaded_flags();
     this.remove_error();
     this.remove_loaded_data();
+    this.clear_auto_refresh_subscription();
 
     this.company_info_service.get_company_info(this.ticker);
     this.company_price_service.get_company_price(this.ticker);
@@ -479,11 +515,11 @@ export class StockResultsComponent implements OnInit {
     this.load_company_latest_price(data);
     this.company_latest_price_loaded = true;
 
-    this.call_stock_candles_api(data.t);
+    this.call_stock_candles_api(data.t, data.autorefresh);
   
   }
 
-  call_stock_candles_api(unix_epoch_time) {
+  call_stock_candles_api(unix_epoch_time, autorefresh) {
     console.log("Calling stock candles api.")
     var to = null;
     var from = null;
@@ -504,7 +540,7 @@ export class StockResultsComponent implements OnInit {
       resolution = 5;
     }
     console.log(`resolution: ${resolution}, from: ${from}, to: ${to}, ticker: ${this.ticker}`)
-    this.company_stock_candles_service.get_company_stock_candles(this.ticker, resolution, from, to);
+    this.company_stock_candles_service.get_company_stock_candles(this.ticker, resolution, from, to, autorefresh);
   }
 
   company_info_subscribe_data(data) {
