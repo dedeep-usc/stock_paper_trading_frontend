@@ -2,12 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import * as Highcharts from 'highcharts';
 import { CompanyEarningsService } from 'src/app/services/company-earnings/company-earnings.service';
 
-// import IndicatorsCore from 'highcharts/indicators/indicators';
-// IndicatorsCore(Highcharts);
-
-// import VolumeByPrice from 'highcharts/indicators/volume-by-price';
-// VolumeByPrice(Highcharts);
-
 @Component({
   selector: 'app-historical-eps',
   templateUrl: './historical-eps.component.html',
@@ -69,12 +63,6 @@ export class HistoricalEpsComponent implements OnInit {
     var earnings_data = this.eps_data(data.earnings);
 
     this.chartOptions = {
-      chart: {
-        
-        width: 400,
-        height: 300,
-        type: 'column'
-      },
       title: {
           text: `Historical EPS Surprises`,
       },

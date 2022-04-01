@@ -131,15 +131,10 @@ export class RecommendationTrendsComponent implements OnInit {
           title: {
               text: `Recommendation Trends`,
           },
-          // chart: {
-          //     type: 'column'
-          // },
           chart: {
-        
-            width: 400,
-            height: 300,
-            type: 'column'
+              type: 'column'
           },
+      
           plotOptions: {
               series: {
                   stacking: 'normal',

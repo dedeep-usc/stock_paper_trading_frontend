@@ -9,6 +9,13 @@
     }
 } */
 
+.chart-container {
+    width: fit-content;
+    margin: 0px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
 
 /* #recom_chart_control {
     margin-top: 4vh;
@@ -19,20 +26,3 @@
         width: 100vw;
     }
 } */
-
-.chart-container {
-    width: fit-content;
-    margin: 0px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-#chart_control {
-    margin-top: 4vh;
-    width: 28vw;
-    height: 350px;
-    @media screen and (max-width: 600px){
-        width: 2000vw
-    }
-}

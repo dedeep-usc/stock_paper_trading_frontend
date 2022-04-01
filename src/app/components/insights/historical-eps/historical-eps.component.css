@@ -2,11 +2,6 @@
     margin-top: 4vh;
 }
 
-
-/* #chart_control {
-    margin-top: 4vh;
-} */
-
 .chart-container {
     width: fit-content;
     margin: 0px;
@@ -15,11 +10,6 @@
     justify-content: center;
 }
 
-#chart_control {
+/* #chart_control {
     margin-top: 4vh;
-    width: 28vw;
-    height: 350px;
-    @media screen and (max-width: 600px){
-        width: 2000vw
-    }
-}
+} */
