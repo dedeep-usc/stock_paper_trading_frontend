@@ -1,8 +1,11 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { tick } from '@angular/core/testing';
 import { Router } from '@angular/router';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { Subscription } from 'rxjs';
 import { CompanyAboutComponent } from '../components/summary/company-about/company-about.component';
 import { HourlyPriceChartComponent } from '../components/summary/hourly-price-chart/hourly-price-chart.component';
+import { TransactionButtonComponent } from '../components/transaction-button/transaction-button/transaction-button.component';
 import { PriceSummaryDetailsComponent } from '../price-summary-details/price-summary-details.component';
 import { CompanyEarningsService } from '../services/company-earnings/company-earnings.service';
 import { CompanyLatestNewsService } from '../services/company-latest-news/company-latest-news.service';
@@ -130,21 +133,86 @@ export class StockResultsComponent implements OnInit {
     // this.add_to_self_closing_alerts(close_alert_key, this.ticker, true);
     var alert_data = this.get_watchlist_alert_body(this.ticker, true);
     this.add_to_self_closing_alerts(close_alert_key, alert_data);
-    this.watchlist_service.add_to_watchlist(this.ticker);
+    this.watchlist_service.add_to_watchlist(this.ticker, this.company_name);
+  }
+
+  // buy_stock() {
+  //   var close_alert_key = `${this.ticker}_bought`;
+  //   var alert_data = this.get_buy_sell_alert_body(this.ticker, true);
+  //   this.add_to_self_closing_alerts(close_alert_key, alert_data);
+  //   this.purchased_stocks.buy_stock(this.ticker, this.company_name);
+  // }
+
+  // sell_stock() {
+  //   var close_alert_key = `${this.ticker}_sold`;
+  //   var alert_data = this.get_buy_sell_alert_body(this.ticker, false);
+  //   this.add_to_self_closing_alerts(close_alert_key, alert_data);
+  //   this.purchased_stocks.sell_stock(this.ticker);
+  // } 
+
+  show_alerts_from_transaction_button(alert_data) {
+    var close_alert_key;
+    var alert_data;
+
+    if (alert_data.option.toUpperCase() == "BUY") {
+      close_alert_key = `${alert_data.ticker}_bought`;
+      alert_data = this.get_buy_sell_alert_body(alert_data.ticker, true);
+    }
+    else if(alert_data.option.toUpperCase() == "SELL") {
+      close_alert_key = `${alert_data.ticker}_sold`;
+      alert_data = this.get_buy_sell_alert_body(alert_data.ticker, false);
+    }
+
+    this.add_to_self_closing_alerts(close_alert_key, alert_data);
   }
 
   buy_stock() {
-    var close_alert_key = `${this.ticker}_bought`;
-    var alert_data = this.get_buy_sell_alert_body(this.ticker, true);
-    this.add_to_self_closing_alerts(close_alert_key, alert_data);
-    this.purchased_stocks.buy_stock(this.ticker);
+    const transModalRef = this.trans_modal_ref.open(
+      TransactionButtonComponent
+    );
+    transModalRef.componentInstance.ticker = this.ticker;
+    transModalRef.componentInstance.name = this.company_name;
+    transModalRef.componentInstance.current_price = this.last_price;
+    transModalRef.componentInstance.option = "Buy";
+    transModalRef.componentInstance.show_alert = true;
+    transModalRef.componentInstance.buy_sell_alerts.subscribe((data) => {
+      console.log("Showing buy alert");
+      this.show_alerts_from_transaction_button(data);
+    });
+
+    // var close_alert_key = `${this.ticker}_bought`;
+    // var alert_data = this.get_buy_sell_alert_body(this.ticker, true);
+    // this.add_to_self_closing_alerts(close_alert_key, alert_data);
   }
 
   sell_stock() {
-    var close_alert_key = `${this.ticker}_sold`;
-    var alert_data = this.get_buy_sell_alert_body(this.ticker, false);
-    this.add_to_self_closing_alerts(close_alert_key, alert_data);
-    this.purchased_stocks.sell_stock(this.ticker);
+
+    const transModalRef = this.trans_modal_ref.open(
+      TransactionButtonComponent
+    );
+    transModalRef.componentInstance.ticker = this.ticker;
+    transModalRef.componentInstance.name = this.company_name;
+    transModalRef.componentInstance.current_price = this.last_price;
+    transModalRef.componentInstance.option = "Sell";
+    transModalRef.componentInstance.show_alert = true;
+    transModalRef.componentInstance.buy_sell_alerts.subscribe((data) => {
+      console.log("Showing sell alert");
+      this.show_alerts_from_transaction_button(data);
+    });
+
+    // var close_alert_key = `${this.ticker}_sold`;
+    // var alert_data = this.get_buy_sell_alert_body(this.ticker, false);
+    // this.add_to_self_closing_alerts(close_alert_key, alert_data);
+  }
+  
+  open_transaction_button(option) {
+    const transModalRef = this.trans_modal_ref.open(
+      TransactionButtonComponent
+    );
+    transModalRef.componentInstance.ticker = this.ticker;
+    transModalRef.componentInstance.name = this.company_name;
+    transModalRef.componentInstance.current_price = this.last_price;
+    transModalRef.componentInstance.option = option;
   }
 
   show_sell_button() {
@@ -194,48 +262,59 @@ export class StockResultsComponent implements OnInit {
     public company_social_sentiment_service: CompanySocialSentimentService,
     public company_recommendation_trends_service: CompanyRecommendationTrendsService,
     public company_earnings_service: CompanyEarningsService,
-    public company_latest_news_service: CompanyLatestNewsService
+    public company_latest_news_service: CompanyLatestNewsService,
+    private trans_modal_ref: NgbModal
   ) { }
   
   company_info_details = null;
   company_latest_price_results = null;
   
+  company_info_subscription : Subscription
+  company_price_service_subscription : Subscription
+  company_peers_service_subscription : Subscription
+  company_stock_candles_service_subscription : Subscription
+  main_chart_stock_candles_service_subscription : Subscription
+  company_social_sentiment_service_subscription : Subscription
+  company_recommendation_trends_service_subscription : Subscription
+  company_earnings_service_subscription : Subscription
+  company_latest_news_service_subscription : Subscription
+
   ngOnInit(): void {
     // console.log("Ollaaa " + this.company_about_details_tab)
 
-    this.company_info_service.company_info$.subscribe((data) => {
+    this.company_info_subscription = this.company_info_service.company_info$.subscribe((data) => {
       this.company_info_subscribe_data(data);
     });
 
-    this.company_price_service.company_price$.subscribe((data) => {
+    this.company_price_service_subscription = this.company_price_service.company_price$.subscribe((data) => {
       this.company_latest_price_subscribe_data(data);
     });
 
-    this.company_peers_service.company_peers$.subscribe((data) => {
+    this.company_peers_service_subscription = this.company_peers_service.company_peers$.subscribe((data) => {
       this.company_peers_subscribe_data(data);
     });
 
-    this.company_stock_candles_service.company_stock_candles$.subscribe((data) => {
+    this.company_stock_candles_service_subscription = this.company_stock_candles_service.company_stock_candles$.subscribe((data) => {
       this.company_stock_candles_subscribe_data(data);
     });
 
-    this.main_chart_stock_candles_service.main_chart_stock_candles$.subscribe((data) => {
+    this.main_chart_stock_candles_service_subscription = this.main_chart_stock_candles_service.main_chart_stock_candles$.subscribe((data) => {
       this.main_chart_stock_candles_subscribe_data(data);
     });
 
-    this.company_social_sentiment_service.company_social_sentiment$.subscribe((data) => {
+    this.company_social_sentiment_service_subscription = this.company_social_sentiment_service.company_social_sentiment$.subscribe((data) => {
       this.company_social_sentiment_subscribe_data(data);
     });
 
-    this.company_recommendation_trends_service.company_recommendation_trends$.subscribe((data) => {
+    this.company_recommendation_trends_service_subscription = this.company_recommendation_trends_service.company_recommendation_trends$.subscribe((data) => {
       this.company_recommendation_trends_subscribe_data(data);
     });
 
-    this.company_earnings_service.company_earnings$.subscribe((data) => {
+    this.company_earnings_service_subscription = this.company_earnings_service.company_earnings$.subscribe((data) => {
       this.company_earnings_subscribe_data(data);
     });
 
-    this.company_latest_news_service.company_latest_news$.subscribe((data) => {
+    this.company_latest_news_service_subscription = this.company_latest_news_service.company_latest_news$.subscribe((data) => {
       this.company_latest_news_subscribe_data(data);
     });
 
@@ -243,6 +322,16 @@ export class StockResultsComponent implements OnInit {
 
   ngOnDestroy(): void {
     // this.company_info_service.reset_state();
+    console.log("Will destroy subscription for company info")
+    this.company_info_subscription.unsubscribe();
+    this.company_price_service_subscription.unsubscribe();
+    this.company_peers_service_subscription.unsubscribe();
+    this.company_stock_candles_service_subscription.unsubscribe();
+    this.main_chart_stock_candles_service_subscription.unsubscribe();
+    this.company_social_sentiment_service_subscription.unsubscribe();
+    this.company_recommendation_trends_service_subscription.unsubscribe();
+    this.company_earnings_service_subscription.unsubscribe();
+    this.company_latest_news_service_subscription.unsubscribe();
   }
 
   reset_state_services() {

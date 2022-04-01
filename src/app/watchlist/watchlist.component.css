@@ -1,0 +1,49 @@
+#watchlist_main_div{
+    margin-top: 10vh;
+}
+
+.watchlist-header {
+    font-weight: 500;
+}
+
+.no_watchlist_alert {
+    margin-top: 4vh;
+}
+
+.company-ticker{
+    font-weight: 500;
+    font-size: 2.5vh;
+}
+
+.company-name {
+    font-weight: 500;
+    font-size: 1.7vh;
+    margin-top: 1vh;
+}
+
+.compnay-close-price { 
+    font-weight: 500;
+    font-size: 2.5vh;
+}
+
+.company-price-change {
+    font-weight: 500;
+    font-size: 1.7vh;
+    margin-top: 1vh;
+}
+
+.x_mark {
+    font-weight: 900;
+}
+
+.port_div {
+    background-color:white; 
+    border-radius: 0.3rem;
+    border: 0.5px solid #adb5bd;
+    padding-bottom: 1.5vh;
+    margin-bottom: 1vh;
+}
+
+.clickable_div{
+    cursor: pointer;
+}

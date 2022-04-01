@@ -1,1 +1,114 @@
-<p>portfolio works!</p>
+<div class="container">
+    <div class="row d-flex justify-content-center"> 
+        <div class="col-lg-9 col-sm-9 col-12">
+            <div id="portfolio_main_div" >
+                <h1 class="portfolio-header mx-2">My Portfolio</h1>
+            </div>
+        </div>
+    </div>
+
+    <div class="row d-flex justify-content-center"> 
+        <div class="col-lg-9 col-sm-9 col-12">
+            <div >
+                <h1 class="money-in-wallet mx-2">Money in Wallet: ${{get_money_balance() | number: "1.0-2"}} </h1>
+            </div>
+        </div>
+    </div>
+
+    <div class="row d-flex justify-content-center no_watchlist_alert">
+        <div class="col-lg-9 col-sm-9 col-12">
+            <ngb-alert [dismissible]="false" *ngIf="!stocks_bought()" class="text-center text-dark mx-3">
+                Currently you don't have any stock in your watchlist.
+            </ngb-alert>
+        </div>
+    </div>
+
+    <mat-spinner
+        *ngIf="!all_data_loaded() && stocks_bought()"
+        class="mt-4 mx-auto"
+        [diameter]="50"
+    ></mat-spinner>
+
+    <div class="row d-flex justify-content-center watchlist_data" *ngIf="all_data_loaded()">
+        <div class="col-lg-9 col-sm-9 col-11">
+            <div *ngFor="let ticker_data of stocks_purchased" class="port_div">
+                <div style="margin-bottom: 1vh;">
+                    <div class="row company_name_div" (click)="linkToDetails(ticker_data.ticker)" style="cursor: pointer;">
+                        <div class="col-11">
+                            <span class="company-ticker">{{ticker_data.ticker}}</span>
+                            <span class="company-name">{{ticker_data.name}}</span>
+                        </div>
+                    </div>
+                    <div class="row company_price_details" >
+                        <div class="col-lg-6 col-sm-6 col-12">
+                            <div class="row">
+                                <div class="col-6">
+                                    <div>
+                                        Quantity:
+                                    </div>
+                                    <div>
+                                        Avg. Cost / Share:
+                                    </div>
+                                    <div>
+                                        Total Cost:
+                                    </div>
+                                </div>
+                                <div class="col-6 text-end">
+                                    <div>
+                                        {{ticker_data.quantity | number: "1.0-2"}}
+                                    </div>
+                                    <div>
+                                        {{ticker_data.avg_cost_share | number: "1.0-2"}}
+                                    </div>
+                                    <div>
+                                        {{ticker_data.total_cost | number: "1.0-2"}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-sm-6 col-12">
+                            <div class="row">
+                                <div class="col-6">
+                                    <div>
+                                        Change:
+                                    </div>
+                                    <div>
+                                        Current Price:
+                                    </div>
+                                    <div>
+                                        Market Value:
+                                    </div>
+                                </div>
+                                <div class="col-6 text-end">
+                                    <div class="{{ticker_data.text_color}}">
+                                        <span class="fa fa-caret-up" *ngIf="ticker_data.price_up_symbol"></span> 
+                                        <span class="fa fa-caret-down" *ngIf="ticker_data.price_down_symbol"></span> 
+                                        {{ticker_data.d | number: "1.0-2"}}
+                                    </div>
+                                    <div class="{{ticker_data.text_color}}">
+                                        {{ticker_data.c | number: "1.0-2"}}
+                                    </div>
+                                    <div class="{{ticker_data.text_color}}">
+                                    {{ticker_data.market_value | number: "1.0-2"}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row buy_sell_portfolio">
+                        <div class="col-12 text-end">
+                            <div id="stock_main_details1_company_buttons">
+                                <button id="stock_main_buy_button" class="btn btn-primary" style="margin-right: 1vh; font-size: 1vh;" (click)="open_transaction_button(ticker_data.ticker, ticker_data.name, ticker_data.c, 'Buy')">Buy</button>
+                                <button id="stock_main_sell_button" class="btn btn-danger" style="font-size: 1vh;" (click)="open_transaction_button(ticker_data.ticker, ticker_data.name, ticker_data.c, 'Sell')">Sell</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div style="margin-bottom: 8vh">
+
+</div>

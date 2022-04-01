@@ -56,7 +56,6 @@ export class NewsComponent implements OnInit {
     for (i=0; i<data.length; i++) {
       if (data[i]["url"] == "" || data[i]["url"] == null || data[i]["source"] == null || data[i]["datetime"] == null || data[i]["headline"] == null || data[i]["summary"] == null ||
       data[i]["source"] == "" || data[i]["datetime"] == "" || data[i]["headline"] == "" || data[i]["summary"] == "" || data[i]["image"] == "" || data[i]["image"] == null) {
-        console.log("Skipping");
         continue;
       }
 

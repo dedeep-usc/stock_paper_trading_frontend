@@ -1,0 +1,58 @@
+<!-- modal header part -->
+<div class="modal-header">
+    <div class="container">
+        <div class="row d-flex align-items-center">
+            <div class="col-6">
+                <div class="modal-title" id="modal-basic-title">
+                    <h1 class="m-0">{{ ticker }}</h1>
+                </div>
+            </div>
+            <div class="col-6 text-end m-0 p-0">
+                <button
+                    type="button"
+                    id="close-btn"
+                    class="close p-0 border-0 m-1"
+                    aria-label="Close"
+                    (click)="trans_modal_service.close('Cross click')"
+                    style="background-color: white;"
+                >
+                    <span class="m-0 border-0" aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- modal body part -->
+
+<div class="modal-body">
+    <p>Current Price: {{ current_price | number: "1.0-2" }}</p>
+    <p>Money in wallet: ${{ get_money_in_wallet() | number: "1.0-2" }}</p>
+    <p>Quantity <input [(ngModel)]="input_quantity" type="number" min="0" /></p>
+    <p style="color: red" *ngIf="not_enough_money()">Not enough money in wallet!</p>
+    <p style="color: red" *ngIf="selling_more_than_owned()">You cannot sell the stocks that you don't have!</p>
+</div>
+
+<!-- modal footer part -->
+
+<div class="modal-footer">
+    <div class="container">
+        <div class="row d-flex align-items-center">
+            <div class="col-6">
+                Total : ${{ input_quantity * current_price | number: "1.2-2" }}
+            </div>
+            <div class="col-6 text-end p-0 m-0">
+                <button
+                    type="button"
+                    [disabled]="
+                    !input_quantity || selling_more_than_owned() || not_enough_money()
+                    "
+                    class="btn btn-outline-dark text-white bg-success border"
+                    (click)="execute_option()"
+                >
+                    {{ option }}
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

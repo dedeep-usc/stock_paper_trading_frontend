@@ -35,6 +35,7 @@ import { HistoricalEpsComponent } from './components/insights/historical-eps/his
 import { SocialSentimentsComponent } from './components/insights/social-sentiments/social-sentiments.component';
 import { NewsComponent } from './components/news/news.component';
 import { NewsDetailComponent } from './components/news-detail/news-detail.component';
+import { TransactionButtonComponent } from './components/transaction-button/transaction-button/transaction-button.component';
 
 
 @NgModule({
@@ -56,7 +57,8 @@ import { NewsDetailComponent } from './components/news-detail/news-detail.compon
     RecommendationTrendsComponent,
     HistoricalEpsComponent,
     NewsComponent,
-    NewsDetailComponent
+    NewsDetailComponent,
+    TransactionButtonComponent
   ],
   imports: [
     BrowserModule,

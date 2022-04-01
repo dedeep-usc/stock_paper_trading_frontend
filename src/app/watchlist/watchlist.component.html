@@ -1,1 +1,136 @@
-<p>watchlist works!</p>
+
+<div class="container">
+    <div class="row d-flex justify-content-center"> 
+        <div class="col-lg-9 col-sm-9 col-12">
+            <div id="watchlist_main_div" >
+                <h1 class="watchlist-header mx-2">My Watchlist</h1>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="row d-flex justify-content-center no_watchlist_alert">
+        <div class="col-lg-9 col-sm-9 col-12">
+            <ngb-alert [dismissible]="false" *ngIf="!watchlist_present()" class="text-center text-dark mx-3">
+                Currently you don't have any stock in your watchlist.
+            </ngb-alert>
+        </div>
+    </div>
+
+    <mat-spinner
+        *ngIf="!all_data_loaded() && watchlist_present()"
+        class="mt-4 mx-auto"
+        [diameter]="50"
+    ></mat-spinner>
+
+    <div class="row d-flex justify-content-center watchlist_data" *ngIf="all_data_loaded()">
+        <div class="col-lg-9 col-sm-9 col-12">
+            <div *ngFor="let ticker_data of watchlist" class="port_div">
+                <div (click)="linkToDetails(ticker_data.ticker)" class="clickable_div">
+                <div class="row">
+                    <div class="col-12 text-end x_mark">
+                        <button id="button-addon1" class="btn shadow-none" style="background-color: white; z-index: 100;" (click)="removeFromWatchlist(ticker_data)">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" fill="currentColor" class="bi bi-x-lg shadow-none" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M13.854 2.146a.5.5 0 0 1 0 .708l-11 11a.5.5 0 0 1-.708-.708l11-11a.5.5 0 0 1 .708 0Z"/>
+                                <path fill-rule="evenodd" d="M2.146 2.146a.5.5 0 0 0 0 .708l11 11a.5.5 0 0 0 .708-.708l-11-11a.5.5 0 0 0-.708 0Z"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="row">
+                    <div class="col-6">
+                        <div class="row d-flex justify-content-center">
+                            <div class="col-11 company-ticker">
+                                {{ticker_data.ticker}}
+                            </div>
+                            <div class="col-11 company-name">
+                                {{ticker_data.name}}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="row">
+                            <div class="col-11 text-end m-0 p-0 compnay-close-price {{ticker_data.text_color}}">
+                                {{ticker_data.c | number: "1.0-2"}}
+                            </div>
+                            <div class="col-11 text-end p-0 company-price-change {{ticker_data.text_color}}">
+                                <span class="fa fa-caret-up" *ngIf="ticker_data.price_up_symbol"></span> 
+                                <span class="fa fa-caret-down" *ngIf="ticker_data.price_down_symbol"></span> 
+                                {{ticker_data.d | number: "1.0-2" }} ({{ticker_data.dp | number: "1.0-2"}} %)
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                </div>
+            </div>
+            <!-- <ngb-alert
+                type="alert.type"
+                *ngFor="let ticker_data of watchlist"
+                class="card p-0 my-3 mx-2 border"
+                (close)="removeFromWatchlist(ticker_data)"
+            >
+                <div class="row mx-3 my-4" (click)="linkToDetails(ticker_data.ticker)">
+                    <div class="col">
+                        <h1 class="m-0 p-0 flex-row item-ticker">
+                            {{ ticker_data.ticker }}
+                        </h1>
+                        <h3 class="m-0 p-0 flex-row text-dark item-name">
+                            {{ ticker_data.name }}
+                        </h3>
+                    </div>
+                    <div class="col mr-1">
+                        <h1
+                            class="m-0 p-0 flex-row last-price d-flex flex-row-reverse"
+                            [class.text-danger]="ticker_data.d < 0"
+                            [class.text-success]="ticker_data.d > 0"
+                        >
+                            {{ ticker_data.c }}
+                        </h1>
+                    </div>
+                    <div
+                        class="m-0 p-0 flex-row d-flex flex-row-reverse change"
+                        [class.text-danger]="ticker_data.d < 0"
+                        [class.text-success]="ticker_data.d > 0"
+                    >
+                        <p class="m-0 p-0">
+                            <svg
+                                *ngIf="ticker_data.d > 0"
+                                width="1em"
+                                height="1em"
+                                viewBox="0 0 16 16"
+                                class="bi bi-caret-up-fill"
+                                fill="green"
+                                xmlns="http://www.w3.org/2000/svg"
+                            >
+                                <path
+                                class="pos"
+                                d="M7.247 4.86l-4.796 5.481c-.566.647-.106 1.659.753 1.659h9.592a1 1 0 0 0 .753-1.659l-4.796-5.48a1 1 0 0 0-1.506 0z"
+                                />
+                            </svg>
+                            <svg
+                                *ngIf="ticker_data.d < 0"
+                                width="1em"
+                                height="1em"
+                                viewBox="0 0 16 16"
+                                class="bi bi-caret-down-fill"
+                                fill="red"
+                                xmlns="http://www.w3.org/2000/svg"
+                            >
+                                <path
+                                class="neg"
+                                d="M7.247 11.14L2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"
+                                />
+                            </svg>
+                            {{ ticker_data.d | number: "1.0-2" }}({{
+                                ticker_data.dp | number: "1.0-2"
+                              }}%)
+                        </p>
+                    </div>
+                </div>
+            </ngb-alert> -->
+        </div>
+    </div>
+
+
+</div>

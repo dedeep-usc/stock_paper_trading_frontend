@@ -22,11 +22,25 @@
     border-radius: 2vh;
 }
 
-.selected_a:active {
+/* .selected_a:active {
     color: #fff;
-}
+    border-radius: 2vh;
+    border: 0.2vh solid;
+} */
 
 
 .nav-link {
     text-align: right;
+}
+
+.active {
+    color: #fff;
+    border-radius: 2vh;
+    border: 0.2vh solid;
+}
+
+.show_border { 
+    color: #fff;
+    border-radius: 2vh;
+    border: 0.2vh solid;
 }
