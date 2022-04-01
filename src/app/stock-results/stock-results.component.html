@@ -2,12 +2,15 @@
     <mat-spinner style="margin:0 auto;" [diameter]="70" class="row d-flex justify-content-center"></mat-spinner>
 </div>
 
-<div class="row d-flex justify-content-center watchlist_alerts" *ngFor="let alert of self_closing_alerts | keyvalue">
+<!-- <div class="row d-flex justify-content-center watchlist_alerts" *ngFor="let alert of self_closing_alerts | keyvalue">
     <ngb-alert *ngIf="alert.value.show" class="col-lg-8 col-sm-8 col-10" [type]="alert.value.type" (closed)="self_closing_alerts_close(alert.key)" [dismissible]="alert.value.dismissible">{{ alert.value.message }}</ngb-alert>
-</div>
+</div> -->
 
 <div *ngIf="!error && !home_ticker && all_data_loaded()" class="row d-flex justify-content-center">
     <div id="stock_main_detail" class="row d-flex justify-content-center">
+        <div class="row d-flex justify-content-center watchlist_alerts" *ngFor="let alert of self_closing_alerts | keyvalue">
+            <ngb-alert *ngIf="alert.value.show" class="col-lg-8 col-sm-8 col-10" [type]="alert.value.type" (closed)="self_closing_alerts_close(alert.key)" [dismissible]="alert.value.dismissible">{{ alert.value.message }}</ngb-alert>
+        </div>
         <div id="stock_main_details1" class="col-lg-3 col-sm-3 col-5">
             <div id="stock_main_details1_company_ticker">
                 {{company_ticker}}
