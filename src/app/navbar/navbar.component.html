@@ -10,10 +10,9 @@
           <li [routerLinkActive]="['active']" ><a routerLink="/watchlist" class="nav-link selected_a"> Watchlist </a></li>
           <li [routerLinkActive]="['active']" ><a routerLink="/portfolio" class="nav-link selected_a"> Portfolio </a></li> -->
 
-          <li class="navbar-item" style="margin-right: 1vh;"><a data-bs-toggle="collapse" data-bs-target="#mynavbar" routerLink="/search/home" class="nav-link"> Search </a></li>
-          <!-- <li class="navbar-item" style="margin-right: 1vh;"><a routerLink="/search/{{this.ticker_val}}" class="nav-link"> Search </a></li> -->
-          <li class="navbar-item" style="margin-right: 1vh;"><a data-bs-toggle="collapse" data-bs-target="#mynavbar" routerLink="/watchlist" class="nav-link" routerLinkActive="active"> Watchlist </a></li>
-          <li class="navbar-item" style="margin-right: 1vh;"><a data-bs-toggle="collapse" data-bs-target="#mynavbar" routerLink="/portfolio" class="nav-link" routerLinkActive="active"> Portfolio </a></li>
+          <li class="navbar-item" style="margin-right: 1vh;"><a data-bs-toggle="collapse" data-bs-target=".navbar-collapse.show" routerLink="/search/{{this.ticker_val}}" [routerLinkActive]="add_active()" class="nav-link"> Search </a></li>
+          <li class="navbar-item" style="margin-right: 1vh;"><a data-bs-toggle="collapse" data-bs-target=".navbar-collapse.show" routerLink="/watchlist" class="nav-link" routerLinkActive="active"> Watchlist </a></li>
+          <li class="navbar-item" style="margin-right: 1vh;"><a data-bs-toggle="collapse" data-bs-target=".navbar-collapse.show" routerLink="/portfolio" class="nav-link" routerLinkActive="active"> Portfolio </a></li>
 
         </ul>
       </div>
