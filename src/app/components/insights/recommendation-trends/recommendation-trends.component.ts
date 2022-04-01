@@ -91,12 +91,12 @@ export class RecommendationTrendsComponent implements OnInit {
       "series": [{
               "data": strong_buys,
               "name": "Strong Buy",
-              "color": "#803131"
+              "color": "#186f37"
             }, 
             {
               "data": buys,
               "name": "Buy",
-              "color": "#f45b5b"
+              "color": "#1cb955"
             },
             {
               "data": holds,
@@ -106,13 +106,13 @@ export class RecommendationTrendsComponent implements OnInit {
             {
               "data": sells,
               "name": "Sell",
-              "color": "#1cb955"
+              "color": "#f45b5b"
             },
             {
               "data": strong_sells,
               "name": "Strong Sell",
-              "color": "#186f37"
-            }].reverse()
+              "color": "#803131"
+            }]
     }
   }
 

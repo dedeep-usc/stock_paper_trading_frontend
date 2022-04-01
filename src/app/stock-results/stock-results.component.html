@@ -116,3 +116,5 @@
 <div class="row d-flex justify-content-center no_data_for_ticker" *ngFor="let alert of alerts">
     <ngb-alert class="col-lg-8 col-sm-8 col-10" [type]="alert.type" (closed)="close(alert)" [dismissible]="alert.dismissible">{{ alert.message }}</ngb-alert>
 </div>
+
+<!-- <app-transaction-button (buy_sell_alerts)="show_alerts_from_transaction_button($event)"></app-transaction-button> -->

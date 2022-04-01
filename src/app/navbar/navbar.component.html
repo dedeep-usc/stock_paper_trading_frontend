@@ -1,14 +1,20 @@
 <nav class="navbar navbar-dark fixed-top navbar-expand-sm" style="background-color: #2224AB">
     <div class="container-fluid">
       <a class="navbar-brand navbar_header" routerLink="/search/home">Stock Search</a>
-      <button class="navbar-toggler collapse_button" type="button" data-bs-toggle="collapse" data-bs-target="#mynavbar">
+      <button class="navbar-toggler collapse_button" type="button" data-bs-toggle="collapse" data-bs-target="#mynavbar" style="margin-right: 1vh;">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="mynavbar">
         <ul class="navbar-nav ms-auto">
-          <li [routerLinkActive]="['active']" ><a routerLink="/search/home" class="nav-link selected_a"> Search </a></li>
+          <!-- <li [routerLinkActive]="['active']" ><a routerLink="/search/home" class="nav-link selected_a"> Search </a></li>
           <li [routerLinkActive]="['active']" ><a routerLink="/watchlist" class="nav-link selected_a"> Watchlist </a></li>
-          <li [routerLinkActive]="['active']" ><a routerLink="/portfolio" class="nav-link selected_a"> Portfolio </a></li>
+          <li [routerLinkActive]="['active']" ><a routerLink="/portfolio" class="nav-link selected_a"> Portfolio </a></li> -->
+
+          <li class="navbar-item" style="margin-right: 1vh;"><a routerLink="/search/home" class="nav-link"> Search </a></li>
+          <!-- <li class="navbar-item" style="margin-right: 1vh;"><a routerLink="/search/{{this.ticker_val}}" class="nav-link"> Search </a></li> -->
+          <li class="navbar-item" style="margin-right: 1vh;"><a routerLink="/watchlist" class="nav-link" routerLinkActive="active"> Watchlist </a></li>
+          <li class="navbar-item" style="margin-right: 1vh;"><a routerLink="/portfolio" class="nav-link" routerLinkActive="active"> Portfolio </a></li>
+
         </ul>
       </div>
     </div>
