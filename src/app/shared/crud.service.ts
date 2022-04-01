@@ -10,7 +10,8 @@ import { of } from 'rxjs';
 })
 export class CrudService {
 
-  endpoint = 'http://localhost:9080';
+  // endpoint = 'http://localhost:9080';
+  endpoint = 'https://stock-paper-trading.appspot.com';
   constructor(private http_client: HttpClient) {}
 
   get_data(url): any {
