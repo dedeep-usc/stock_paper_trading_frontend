@@ -66,6 +66,9 @@ export class HistoricalEpsComponent implements OnInit {
       title: {
           text: `Historical EPS Surprises`,
       },
+      tooltip: {
+        shared: true
+      },
       xAxis: {
           type: 'linear',
           scrollbar: {
