@@ -2,6 +2,9 @@
     <div class="row d-flex justify-content-center"> 
         <div class="col-lg-9 col-sm-9 col-12">
             <div id="portfolio_main_div" >
+                <div class="row d-flex justify-content-center watchlist_alerts" *ngFor="let alert of self_closing_alerts | keyvalue">
+                    <ngb-alert *ngIf="alert.value.show" class="col-lg-8 col-sm-8 col-10" [type]="alert.value.type" (closed)="self_closing_alerts_close(alert.key)" [dismissible]="alert.value.dismissible">{{ alert.value.message }}</ngb-alert>
+                </div>
                 <h1 class="portfolio-header mx-2">My Portfolio</h1>
             </div>
         </div>

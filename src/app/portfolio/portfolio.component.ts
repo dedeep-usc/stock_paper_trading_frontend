@@ -23,6 +23,22 @@ export class PortfolioComponent implements OnInit {
   fetch_finish = false;
   stocks_purchased = [];
   ticker_stocks_purchased_index_mapper = {}
+  
+  watchlist_test_alert = {
+    type: 'success',
+    message: 'AAPL removed successfully removed from watchlist.',
+    dismissible: true,
+    show: false
+  };
+
+  self_closing_alerts_close(alert) {
+    // this.watchlist_alerts.splice(this.watchlist_alerts.indexOf(alert), 1);
+    delete this.self_closing_alerts[alert];
+  }
+
+  self_closing_alerts = {
+    "a": this.watchlist_test_alert
+  }
 
   ngOnInit(): void {
     this.stocks_purchased = [];
@@ -33,6 +49,10 @@ export class PortfolioComponent implements OnInit {
 
   linkToDetails(ticker) {
     this.router.navigateByUrl('/search/' + ticker);
+  }
+
+  roundTwoDecimals(num: number) {
+    return (Math.round(num * 100) / 100)
   }
 
   fetch_all_ticker_data() {
@@ -66,7 +86,9 @@ export class PortfolioComponent implements OnInit {
         count += 1;
 
         // var d = data.message.d == null ? 0 : data.message.d;
-        var avg_cost = local_storage_stocks_owned[ticker].total_cost / local_storage_stocks_owned[ticker].quantity
+        var avg_cost = local_storage_stocks_owned[ticker].total_cost / local_storage_stocks_owned[ticker].quantity;
+        avg_cost = this.roundTwoDecimals(avg_cost);
+        data.message.c = this.roundTwoDecimals(data.message.c);
         var d = data.message.c - avg_cost;
         console.log("DDTEST : " + (avg_cost - data.message.c));
         let temp_data = {
@@ -134,7 +156,7 @@ export class PortfolioComponent implements OnInit {
     trans_modal_ref.componentInstance.name = name;
     trans_modal_ref.componentInstance.current_price = current_price;
     trans_modal_ref.componentInstance.option = option;
-    trans_modal_ref.componentInstance.show_alert = false;
+    trans_modal_ref.componentInstance.show_alert = true;
     trans_modal_ref.componentInstance.alert_portfolio = true;
 
     trans_modal_ref.componentInstance.buy_sell_success.subscribe((data) => {
@@ -143,6 +165,43 @@ export class PortfolioComponent implements OnInit {
       this.fetch_all_ticker_data();
 
     });
+
+    trans_modal_ref.componentInstance.buy_sell_alerts.subscribe((data) => {
+      console.log("Showing buy alert");
+      this.show_alerts_from_transaction_button(data);
+    });
+  }
+
+  show_alerts_from_transaction_button(alert_data) {
+    var close_alert_key;
+    var alert_data;
+
+    if (alert_data.option.toUpperCase() == "BUY") {
+      close_alert_key = `${alert_data.ticker}_bought`;
+      alert_data = this.get_buy_sell_alert_body(alert_data.ticker, true);
+    }
+    else if(alert_data.option.toUpperCase() == "SELL") {
+      close_alert_key = `${alert_data.ticker}_sold`;
+      alert_data = this.get_buy_sell_alert_body(alert_data.ticker, false);
+    }
+
+    this.add_to_self_closing_alerts(close_alert_key, alert_data);
+  }
+
+  get_buy_sell_alert_body(ticker, buy) {
+    ticker = ticker.toUpperCase();
+
+    return {
+      type: buy? "success" : "danger",
+      message: buy? `${ticker} bought successfully.` : `${ticker} sold successfully.`,
+      dismissible: true,
+      show: true
+    }
+  }
+
+  add_to_self_closing_alerts(key, data) {
+    this.self_closing_alerts[key] = data;
+    setTimeout(() => this.self_closing_alerts_close(key), 2000);
   }
 
 }
