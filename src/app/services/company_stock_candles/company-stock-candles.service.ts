@@ -76,8 +76,9 @@ export class CompanyStockCandlesService {
 
   }
 
-  get_company_stock_candles(ticker, resolution, from, to) {
-    if (this.check_valid_data_present(ticker)) {
+  get_company_stock_candles(ticker, resolution, from, to, autorefresh=false) {
+    console.log("CompanyStockCandlesService get_company_stock_candles autorefresh: " + autorefresh);
+    if (!autorefresh && this.check_valid_data_present(ticker)) {
       console.log(`CompanyStockCandlesService already has data for the ticker: ${ticker}. Will return.`);
       return;
     }
