@@ -48,3 +48,8 @@
 #stock_main_details1_company_buttons {
     font-size: 0.1vh;   
 }
+
+.watchlist_alerts {
+    margin-top: 2vh;
+    text-align: center;
+}
