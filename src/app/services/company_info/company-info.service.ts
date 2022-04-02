@@ -61,6 +61,7 @@ export class CompanyInfoService {
   get_company_info(ticker) {
     if (this.check_valid_data_present(ticker)) {
       console.log(`CompanyInfoService already has data for the ticker: ${ticker}. Will return.`);
+      this.set_values(this._company_info_result.getValue());
       return;
     }
     
