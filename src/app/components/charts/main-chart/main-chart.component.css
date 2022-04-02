@@ -21,7 +21,11 @@
     margin-top: 4vh;
     width: 71vw;
     height: 600px;
-    @media screen and (max-width: 600px){
-        width: 90vw
+}
+@media screen and (max-width: 600px){
+
+    #chart_control { 
+        width: 90vw;
     }
+   
 }
