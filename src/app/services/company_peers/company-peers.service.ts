@@ -68,6 +68,7 @@ export class CompanyPeersService {
 
     if (this.check_valid_data_present(ticker)) {
       console.log(`CompanyPeersService already has data for the ticker: ${ticker}. Will return.`);
+      this.set_values(this._company_peer_result.getValue());
       return;
     }
 

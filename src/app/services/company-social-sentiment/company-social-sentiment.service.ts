@@ -70,6 +70,7 @@ export class CompanySocialSentimentService {
     console.log("CompanySocialSentimentService get_company_price ticker: " + ticker);
     if (this.check_valid_data_present(ticker)) {
       console.log(`CompanySocialSentimentService already has data for the ticker: ${ticker}. Will return.`);
+      this.set_values(this._company_social_sentiment_result.getValue());
       return;
     }
 

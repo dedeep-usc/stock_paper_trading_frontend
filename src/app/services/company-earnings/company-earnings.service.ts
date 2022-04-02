@@ -68,6 +68,7 @@ export class CompanyEarningsService {
     console.log("CompanyEarningsService get_company_price ticker: " + ticker);
     if (this.check_valid_data_present(ticker)) {
       console.log(`CompanyEarningsService already has data for the ticker: ${ticker}. Will return.`);
+      this.set_values(this._company_earnings_result.getValue());
       return;
     }
 

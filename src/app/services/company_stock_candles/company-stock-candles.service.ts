@@ -80,6 +80,7 @@ export class CompanyStockCandlesService {
     console.log("CompanyStockCandlesService get_company_stock_candles autorefresh: " + autorefresh);
     if (!autorefresh && this.check_valid_data_present(ticker)) {
       console.log(`CompanyStockCandlesService already has data for the ticker: ${ticker}. Will return.`);
+      this.set_values(this._company_stock_candles_result.getValue());
       return;
     }
 

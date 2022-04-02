@@ -73,6 +73,7 @@ export class CompanyPriceService {
     console.log("CompanyPriceService get_company_price ticker: " + ticker);
     if (!autorefresh && this.check_valid_data_present(ticker)) {
       console.log(`CompanyPriceService already has data for the ticker: ${ticker}. Will return.`);
+      this.set_values(this._company_price_result.getValue());
       return;
     }
 

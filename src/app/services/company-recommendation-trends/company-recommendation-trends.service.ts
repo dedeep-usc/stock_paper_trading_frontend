@@ -68,6 +68,7 @@ export class CompanyRecommendationTrendsService {
     console.log("CompanyRecommendationTrendsService get_company_price ticker: " + ticker);
     if (this.check_valid_data_present(ticker)) {
       console.log(`CompanyRecommendationTrendsService already has data for the ticker: ${ticker}. Will return.`);
+      this,this.set_values(this._company_recommendation_trends_result.getValue());
       return;
     }
 

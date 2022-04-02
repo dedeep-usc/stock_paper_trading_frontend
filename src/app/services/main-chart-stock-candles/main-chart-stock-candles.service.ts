@@ -79,6 +79,7 @@ export class MainChartStockCandlesService {
   get_company_stock_candles(ticker, resolution, from, to) {
     if (this.check_valid_data_present(ticker)) {
       console.log(`MainChartStockCandlesService already has data for the ticker: ${ticker}. Will return.`);
+      this.set_values(this._main_chart_stock_candles_result.getValue());
       return;
     }
 

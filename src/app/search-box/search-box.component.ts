@@ -58,10 +58,14 @@ export class SearchBoxComponent implements OnInit {
   clear_results () {
     this.alerts = []
     this.filtered_tickers = [];
-    this.selected_ticker = "";
-    this.ticker_value.setValue({
-      "symbol": ""
-    });
+    if (this.selected_ticker != null) {
+      this.selected_ticker = null;
+    }
+    this.selected_ticker = null;
+    // console.log("HELLOOOOOO : " ,this.ticker_value)
+    // this.ticker_value.setValue({
+    //   "symbol": ""
+    // });
     this.isLoading = false;
   }
 
@@ -109,7 +113,7 @@ export class SearchBoxComponent implements OnInit {
         filter(res => {
           console.log(res);
           this.userClicked = false;
-          return res != null && res != "" && res.length > 2
+          return res != null && res != ""
         }),
         // distinctUntilChanged(),
         debounceTime(700),

@@ -66,6 +66,7 @@ export class CompanyLatestNewsService {
     console.log("CompanyLatestNewsService get_company_price ticker: " + ticker);
     if (this.check_valid_data_present(ticker)) {
       console.log(`CompanyLatestNewsService already has data for the ticker: ${ticker}. Will return.`);
+      this.set_values(this._company_latest_news_result.getValue());
       return;
     }
     this.ticker = ticker.toUpperCase();
