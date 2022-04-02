@@ -45,7 +45,7 @@ export class SearchBoxComponent implements OnInit {
   }
 
   displayWith(value: any) {
-    return value?.symbol;
+    return value?.symbol || value;
   }
 
   onSelected() {
@@ -59,7 +59,9 @@ export class SearchBoxComponent implements OnInit {
     this.alerts = []
     this.filtered_tickers = [];
     this.selected_ticker = "";
-    this.ticker_value.setValue("");
+    this.ticker_value.setValue({
+      "symbol": ""
+    });
     this.isLoading = false;
   }
 

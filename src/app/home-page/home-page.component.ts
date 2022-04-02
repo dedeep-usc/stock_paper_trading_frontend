@@ -1,3 +1,4 @@
+import { ThisReceiver } from '@angular/compiler';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router'
 import { SearchBoxComponent } from '../search-box/search-box.component';
@@ -30,7 +31,7 @@ export class HomePageComponent implements OnInit {
       this.ticker_val = params["ticker"]
       // this.search_box.isLoading = false;
       this.search_box.filtered_tickers = [];
-      this.fill_data(this.ticker_val);
+      // this.fill_data(this.ticker_val);
 
       // publish current ticker to ticker publish service
       // this.ticker_publisher_service.set_curreny_ticker(this.ticker_val.toUpperCase());
@@ -39,17 +40,23 @@ export class HomePageComponent implements OnInit {
       
       console.log("Send this to ticker_publish_service: " + upperCaseTicker);
       this.ticker_publisher_service.set_curreny_ticker(upperCaseTicker);
-      console.log("HomePageComponent this.search_box.ticker_value BEFORE setting", this.search_box.ticker_value );
+      // console.log("HomePageComponent this.search_box.ticker_value BEFORE setting", this.search_box.ticker_value );
+
       if (this.ticker_val != "home") {
-        console.log("HomePageComponent setting searchbox.ticker_val: " + this.ticker_val);
-        this.search_box.ticker_value.setValue({"symbol":this.ticker_val});
+        // console.log("HomePageComponent setting searchbox.ticker_val: " + this.ticker_val);
+        // this.search_box.ticker_value.setValue({"symbol":this.ticker_val});
+        this.search_box.selected_ticker = this.ticker_val;
         this.search_box.userClicked = true;
       }
       else {
-        this.search_box.ticker_value.setValue({"symbol": ""});
+        // this.search_box.ticker_value.setValue({"symbol": ""});
+        // this.search_box.selected_ticker = this.ticker_val;
+        this.search_box.selected_ticker = null;
         this.search_box.userClicked = true;
       }
-      console.log("HomePageComponent this.search_box.ticker_value  AFTER setting", this.search_box.ticker_value );
+      // console.log("HomePageComponent this.search_box.ticker_value  AFTER setting", this.search_box.ticker_value );
+
+      this.fill_data(this.ticker_val);
     });
   }
 
@@ -62,7 +69,7 @@ export class HomePageComponent implements OnInit {
       stock_results_tab.home_ticker = true;
       stock_results_tab.alerts = [];
       stock_results_tab.ticker = "home";
-      this.search_box.ticker_value.setValue({"symbol": ""});
+      // this.search_box.ticker_value.setValue({"symbol": ""});
       return;
     }
     

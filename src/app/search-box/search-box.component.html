@@ -3,12 +3,12 @@
         <div class="input-group input_container" style="background-color: #F8F9FA;">
              <!-- <input type="text" placeholder="Enter stock ticker symbol" aria-describedby="button-addon1" class="form-control border-0 bg-light shadow-none"> -->
              
-            <input id="search_box_ip" (keydown.enter)="show_results()" matInput placeholder="Enter stock ticker symbol" ngModel={{selected_ticker}} [matAutocomplete]="auto" [formControl]="ticker_value" class="form-control border-0 bg-light shadow-none ip_box">
+            <input id="search_box_ip" (keydown.enter)="show_results()" matInput placeholder="Enter stock ticker symbol" [(ngModel)]="selected_ticker" [matAutocomplete]="auto" [formControl]="ticker_value" class="form-control border-0 bg-light shadow-none ip_box">
         
             <mat-autocomplete #auto="matAutocomplete" (optionSelected)="onSelected()" [displayWith]="displayWith">
                 <mat-option *ngIf="isLoading" class="is-loading"><mat-spinner [diameter]="40"></mat-spinner></mat-option>
                 <ng-container *ngIf="!isLoading">
-                    <mat-option *ngFor="let ticker of filtered_tickers" [value]="ticker">
+                    <mat-option *ngFor="let ticker of filtered_tickers" [value]="ticker.symbol">
                     <span><b>{{ticker.symbol}}</b> &#124; {{ticker.description}}</span>
                     </mat-option>
                 </ng-container>
