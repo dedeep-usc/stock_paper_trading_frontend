@@ -12,10 +12,23 @@
 
 style = "width: 28vw; height: 40vh; display: block;" -->
 
-<highcharts-chart
+<!-- <highcharts-chart
         class="col-12"
         [Highcharts] = "highcharts" 
         [options] = "chartOptions"
         style = "width: 28vw; height: 40vh; display: block; margin-top: 4vh;"
          >
-</highcharts-chart>
+</highcharts-chart> -->
+
+<div class="container m-0 p-0">
+    <div class="row mx-auto chart-container m-0 p-0">
+        <highcharts-chart
+        id="chart-half"
+        class="col-12"
+        [callbackFunction]="chartCallback"
+        [Highcharts] = "highcharts" 
+        [options] = "chartOptions" 
+        >
+        </highcharts-chart>
+    </div>
+</div>

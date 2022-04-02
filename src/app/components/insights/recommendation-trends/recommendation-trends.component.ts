@@ -164,9 +164,10 @@ export class RecommendationTrendsComponent implements OnInit {
   }
 
   chartCallback = (chart) => {
+    console.log("In chartCallBack")
     setTimeout(()=>{
       chart.reflow();
-    }, 0);
+    }, 2000);
   }
 
 }

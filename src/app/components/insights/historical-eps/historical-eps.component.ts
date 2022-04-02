@@ -96,4 +96,10 @@ export class HistoricalEpsComponent implements OnInit {
 
   }
 
+  chartCallback = (chart) => {
+    setTimeout(()=>{
+      chart.reflow();
+    }, 0);
+  }
+
 }

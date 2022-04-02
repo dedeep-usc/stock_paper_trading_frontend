@@ -26,7 +26,7 @@ export class HomePageComponent implements OnInit {
   ngOnInit(): void {
 
     this.route.params.subscribe(params => {
-      console.log("The ticker from the URL is: " + params["ticker"]);
+      console.log("HomePageComponent The ticker from the URL is: " + params["ticker"]);
       this.ticker_val = params["ticker"]
       // this.search_box.isLoading = false;
       this.search_box.filtered_tickers = [];
@@ -39,8 +39,9 @@ export class HomePageComponent implements OnInit {
       
       console.log("Send this to ticker_publish_service: " + upperCaseTicker);
       this.ticker_publisher_service.set_curreny_ticker(upperCaseTicker);
-
+      console.log("HomePageComponent this.search_box.ticker_value BEFORE setting", this.search_box.ticker_value );
       if (this.ticker_val != "home") {
+        console.log("HomePageComponent setting searchbox.ticker_val: " + this.ticker_val);
         this.search_box.ticker_value.setValue({"symbol":this.ticker_val});
         this.search_box.userClicked = true;
       }
@@ -48,6 +49,7 @@ export class HomePageComponent implements OnInit {
         this.search_box.ticker_value.setValue({"symbol": ""});
         this.search_box.userClicked = true;
       }
+      console.log("HomePageComponent this.search_box.ticker_value  AFTER setting", this.search_box.ticker_value );
     });
   }
 
