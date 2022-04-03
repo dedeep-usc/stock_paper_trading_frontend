@@ -84,12 +84,12 @@ export class SearchBoxComponent implements OnInit {
       ticker = this.ticker_value.value;
     }
     else {
-      ticker = this.ticker_value.value.symbol;
+      ticker = this.ticker_value.value?.symbol || "";
     }
 
     console.log(ticker);
 
-    if (ticker == "home" || ticker == "" || ticker == null) {
+    if (ticker == "home" || ticker == "" || ticker == null || ticker == "HOME") {
       console.log("ticker is invalid");
       this.handle_errors([this.invalid_ticker])
       return;
