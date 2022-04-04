@@ -32,9 +32,9 @@
         </div> 
     </div>   -->
 
-    <div><span><b>High Price:</b> {{price_summary_details.high_price}}</span></div>
-    <div><span><b>Low Price:</b> {{price_summary_details.low_price}}</span></div>
-    <div><span><b>Open Price:</b> {{price_summary_details.open_price}}</span></div>
-    <div><span><b>Prev. Close:</b> {{price_summary_details.prev_close}}</span></div>
+    <div><span><b>High Price:</b> {{price_summary_details.high_price | number: "1.0-2"}}</span></div>
+    <div><span><b>Low Price:</b> {{price_summary_details.low_price | number: "1.0-2"}}</span></div>
+    <div><span><b>Open Price:</b> {{price_summary_details.open_price | number: "1.0-2"}}</span></div>
+    <div><span><b>Prev. Close:</b> {{price_summary_details.prev_close | number: "1.0-2"}}</span></div>
 
 </div>

@@ -34,10 +34,10 @@ export class PriceSummaryDetailsComponent implements OnInit {
     }
 
     this.price_summary_details = {
-      "high_price": data.h,
-      "low_price": data.l,
-      "open_price": data.o,
-      "prev_close": data.pc
+      "high_price": data.h?.toFixed(2),
+      "low_price": data.l?.toFixed(2),
+      "open_price": data.o?.toFixed(2),
+      "prev_close": data.pc?.toFixed(2)
     }
   }
 
