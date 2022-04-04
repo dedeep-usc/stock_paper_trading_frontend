@@ -8,6 +8,7 @@ import { debounceTime, tap, switchMap, finalize, distinctUntilChanged, filter } 
 import { Router } from '@angular/router';
 import { StockResultsComponent } from '../stock-results/stock-results.component';
 import { MatAutocompleteTrigger } from '@angular/material/autocomplete';
+import { TickerPublisherService } from '../services/ticker-publisher/ticker-publisher.service';
 
 @Component({
   selector: 'app-search-box',
@@ -38,7 +39,8 @@ export class SearchBoxComponent implements OnInit {
 
   constructor(
     private crud_service: CrudService,
-    private router: Router
+    private router: Router,
+    public ticker_publisher_service: TickerPublisherService
   ) { }
 
 
@@ -115,6 +117,7 @@ export class SearchBoxComponent implements OnInit {
       .pipe(
         filter(res => {
           console.log(res);
+          console.log("AAPPLL: " + this.ticker_publisher_service.get_values())
           this.userClicked = false;
           return res != null && res != ""
         }),
@@ -122,7 +125,7 @@ export class SearchBoxComponent implements OnInit {
         debounceTime(300),
         filter(res => {
           console.log("Checking if user has clicked on enter!")
-          return !this.userClicked;
+          return !this.userClicked && res != this.ticker_publisher_service.get_values();
         }),
         tap(() => {
           this.userClicked = false;
