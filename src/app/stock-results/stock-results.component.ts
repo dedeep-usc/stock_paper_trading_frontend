@@ -325,15 +325,15 @@ export class StockResultsComponent implements OnInit {
   ngOnDestroy(): void {
     // this.company_info_service.reset_state();
     console.log("Will destroy subscription for company info")
-    this.company_info_subscription.unsubscribe();
-    this.company_price_service_subscription.unsubscribe();
-    this.company_peers_service_subscription.unsubscribe();
-    this.company_stock_candles_service_subscription.unsubscribe();
-    this.main_chart_stock_candles_service_subscription.unsubscribe();
-    this.company_social_sentiment_service_subscription.unsubscribe();
-    this.company_recommendation_trends_service_subscription.unsubscribe();
-    this.company_earnings_service_subscription.unsubscribe();
-    this.company_latest_news_service_subscription.unsubscribe();
+    this.company_info_subscription?.unsubscribe();
+    this.company_price_service_subscription?.unsubscribe();
+    this.company_peers_service_subscription?.unsubscribe();
+    this.company_stock_candles_service_subscription?.unsubscribe();
+    this.main_chart_stock_candles_service_subscription?.unsubscribe();
+    this.company_social_sentiment_service_subscription?.unsubscribe();
+    this.company_recommendation_trends_service_subscription?.unsubscribe();
+    this.company_earnings_service_subscription?.unsubscribe();
+    this.company_latest_news_service_subscription?.unsubscribe();
     
     // autorefresh
     this.clear_auto_refresh_subscription();
