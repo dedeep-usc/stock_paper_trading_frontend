@@ -7,6 +7,7 @@ import { debounceTime, tap, switchMap, finalize, distinctUntilChanged, filter } 
 
 import { Router } from '@angular/router';
 import { StockResultsComponent } from '../stock-results/stock-results.component';
+import { MatAutocompleteTrigger } from '@angular/material/autocomplete';
 
 @Component({
   selector: 'app-search-box',
@@ -14,6 +15,7 @@ import { StockResultsComponent } from '../stock-results/stock-results.component'
   styleUrls: ['./search-box.component.css']
 })
 export class SearchBoxComponent implements OnInit {
+  @ViewChild(MatAutocompleteTrigger) autocomplete!: MatAutocompleteTrigger;
   filtered_tickers: any;
   isLoading = false;
   selected_ticker: any = "";
@@ -97,6 +99,7 @@ export class SearchBoxComponent implements OnInit {
 
     this.router.navigateByUrl("/search/"+ticker.toUpperCase());
     // this.fill_stock_data_in_child(ticker);
+    this.autocomplete.closePanel();
   }
   
 
@@ -116,7 +119,7 @@ export class SearchBoxComponent implements OnInit {
           return res != null && res != ""
         }),
         // distinctUntilChanged(),
-        debounceTime(500),
+        debounceTime(300),
         filter(res => {
           console.log("Checking if user has clicked on enter!")
           return !this.userClicked;
