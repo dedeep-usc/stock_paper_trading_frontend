@@ -1,0 +1,18 @@
+runtime: python27
+api_version: 1
+threadsafe: true
+handlers:
+- url: /
+  static_files: stock-paper-trading/index.html
+  upload: stock-paper-trading/index.html
+- url: /search/.*
+  static_files: stock-paper-trading/index.html
+  upload: stock-paper-trading/index.html
+- url: /watchlist
+  static_files: stock-paper-trading/index.html
+  upload: stock-paper-trading/index.html
+- url: /portfolio
+  static_files: stock-paper-trading/index.html
+  upload: stock-paper-trading/index.html
+- url: /
+  static_dir: stock-paper-trading
