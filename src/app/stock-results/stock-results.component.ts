@@ -445,9 +445,9 @@ export class StockResultsComponent implements OnInit {
 
   load_company_latest_price(data) {
 
-    this.last_price = data.c.toFixed(2);
-    this.price_change = data.d.toFixed(2);
-    this.price_change_percent = data.dp.toFixed(2);
+    this.last_price = data.c?.toFixed(2);
+    this.price_change = data.d?.toFixed(2);
+    this.price_change_percent = data.dp?.toFixed(2);
     // this.price_time = this.date_service.get_homepage_format(this.date_service.convert_unix_time_stamp(data.t));
     this.price_time = this.date_service.get_homepage_format(new Date());
     this.handle_price_change(data.d);

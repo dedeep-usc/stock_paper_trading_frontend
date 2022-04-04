@@ -33,12 +33,12 @@
         </div>
         <div id="stock_main_details3" class="col-lg-3 col-sm-3 col-5">
             <div id="stock_main_details3_price" [class]="price_change_class">
-                {{last_price}}
+                {{last_price | number: "1.0-2"}}
             </div>
             <div id="stock_main_details3_price_change" [class]="price_change_class">
                 <span class="fa fa-caret-up" *ngIf="price_up_symbol"></span> 
                 <span class="fa fa-caret-down" *ngIf="price_down_symbol"></span> 
-                <span class="text-nowrap">{{price_change}} ({{price_change_percent}} %)</span>
+                <span class="text-nowrap">{{price_change | number: "1.0-2"}} ({{price_change_percent | number: "1.0-2"}} %)</span>
             </div>
             <div id="stock_main_details3_price_timestamp">
                 {{price_time}}

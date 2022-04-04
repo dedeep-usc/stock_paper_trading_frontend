@@ -58,9 +58,9 @@ export class WatchlistComponent implements OnInit {
         let temp_data = {
           "ticker": ticker,
           "name": company_name,
-          "d": data.message.d,
-          "c": data.message.c,
-          "dp": data.message.dp,
+          "d": data.message.d?.toFixed(2),
+          "c": data.message.c?.toFixed(2),
+          "dp": data.message.dp?.toFixed(2),
           "price_up_symbol": d > 0 ? true : false,
           "price_down_symbol": d < 0 ? true : false,
           "text_color": this.get_text_color(d)
