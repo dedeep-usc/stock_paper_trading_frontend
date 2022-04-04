@@ -28,7 +28,7 @@
 <div class="modal-body">
     <p>Current Price: {{ current_price | number: "1.0-2" }}</p>
     <p>Money in wallet: ${{ get_money_in_wallet() | number: "1.0-2" }}</p>
-    <p>Quantity <input [(ngModel)]="input_quantity" type="number" min="0" /></p>
+    <p>Quantity <input [(ngModel)]="input_quantity" type="number" min="0" placeholder="0" min="0" step="1" onkeypress='return event.charCode >= 48 && event.charCode <= 57'/></p>
     <p style="color: red" *ngIf="not_enough_money()">Not enough money in wallet!</p>
     <p style="color: red" *ngIf="selling_more_than_owned()">You cannot sell the stocks that you don't have!</p>
 </div>
