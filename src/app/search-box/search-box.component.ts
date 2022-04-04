@@ -116,7 +116,7 @@ export class SearchBoxComponent implements OnInit {
           return res != null && res != ""
         }),
         // distinctUntilChanged(),
-        debounceTime(700),
+        debounceTime(500),
         filter(res => {
           console.log("Checking if user has clicked on enter!")
           return !this.userClicked;
